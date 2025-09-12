@@ -1,6 +1,6 @@
 """
-Get Options Chains: Find available strikes and expirations
-Only for stocks with prices
+Get Options Chains: WIDER strike range for credit spreads
+Gets strikes from 70% to 130% of stock price
 """
 import json
 import sys
@@ -21,7 +21,7 @@ def load_stock_prices():
 
 def get_chains():
     """Get options chains for all stocks"""
-    print("⛓️ Getting options chains from TastyTrade...")
+    print("⛓️ Getting WIDER options chains from TastyTrade...")
     
     prices = load_stock_prices()
     sess = Session(USERNAME, PASSWORD)
@@ -66,11 +66,12 @@ def get_chains():
             exp_date = datetime.fromisoformat(best_exp["date"]).date()
             options = chain[exp_date]
             
-            # Find strikes near money (80% to 120% of stock price)
+            # WIDER RANGE: 70% to 130% of stock price
             strikes = []
             for opt in options:
                 strike = float(opt.strike_price)
-                if stock_price * 0.8 <= strike <= stock_price * 1.2:
+                # Include strikes from 70% to 130%
+                if stock_price * 0.70 <= strike <= stock_price * 1.30:
                     strikes.append({
                         "strike": strike,
                         "type": opt.option_type.value,
@@ -83,10 +84,14 @@ def get_chains():
                 "expirations": suitable_exps,
                 "best_expiration": best_exp,
                 "strikes_count": len(strikes),
-                "strikes": strikes[:20]  # Limit to 20 strikes for now
+                "strikes": strikes  # Don't limit to 20
             }
             
+            # Show strike distribution
+            calls_otm = len([s for s in strikes if s["type"] == "C" and s["strike"] > stock_price])
+            puts_otm = len([s for s in strikes if s["type"] == "P" and s["strike"] < stock_price])
             print(f"   ✅ {len(suitable_exps)} expirations, {len(strikes)} strikes")
+            print(f"      OTM: {calls_otm} calls, {puts_otm} puts")
             
         except Exception as e:
             print(f"   ❌ Error: {e}")
@@ -118,7 +123,7 @@ def save_chains(chains, failed):
 def main():
     """Main execution"""
     print("="*60)
-    print("STEP 3: Get Options Chains")
+    print("STEP 3: Get Options Chains (WIDER RANGE)")
     print("="*60)
     
     # Get chains

@@ -1,6 +1,6 @@
 """
-Check Liquidity: Filter out illiquid options
-Keep only options with good bid/ask spreads
+Check Liquidity Enhanced: Multi-factor scoring instead of binary filter
+Scores each option 0-100 based on spread, volume, and price
 """
 import asyncio
 import json
@@ -20,9 +20,39 @@ def load_chains():
         print("❌ chains.json not found - run get_options_chains.py first")
         sys.exit(1)
 
+def calculate_liquidity_score(bid, ask, mid):
+    """Score liquidity 0-100 based on spread and price"""
+    score = 0
+    
+    # Spread tightness (60 points)
+    if mid > 0:
+        spread_pct = ((ask - bid) / mid) * 100
+        if spread_pct <= 3:
+            score += 60
+        elif spread_pct <= 5:
+            score += 45
+        elif spread_pct <= 8:
+            score += 30
+        elif spread_pct <= 12:
+            score += 15
+        elif spread_pct <= 20:
+            score += 5
+    
+    # Price quality (40 points) - prefer options worth at least 30 cents
+    if mid >= 1.00:
+        score += 40
+    elif mid >= 0.50:
+        score += 30
+    elif mid >= 0.30:
+        score += 20
+    elif mid >= 0.20:
+        score += 10
+    
+    return score
+
 async def check_option_liquidity():
-    """Check bid/ask spreads for liquidity"""
-    print("💧 Checking options liquidity...")
+    """Check liquidity and score each option"""
+    print("💧 Scoring options liquidity...")
     
     chains = load_chains()
     sess = Session(USERNAME, PASSWORD)
@@ -33,20 +63,17 @@ async def check_option_liquidity():
         for ticker, chain_data in chains.items():
             print(f"\n{ticker}: Checking liquidity...")
             
-            # Get symbols for this ticker's options
             symbols = [s["symbol"] for s in chain_data["strikes"]]
             
             if not symbols:
                 print(f"   ❌ No symbols to check")
                 continue
             
-            # Subscribe to quotes
             await streamer.subscribe(Quote, symbols)
             
             liquid_strikes = []
             checked = 0
             
-            # Collect for 5 seconds
             start_time = asyncio.get_event_loop().time()
             
             while asyncio.get_event_loop().time() - start_time < 5:
@@ -58,9 +85,12 @@ async def check_option_liquidity():
                         ask = float(quote.ask_price or 0)
                         
                         if bid > 0 and ask > 0:
-                            spread = ask - bid
                             mid = (bid + ask) / 2
+                            spread = ask - bid
                             spread_pct = (spread / mid * 100) if mid > 0 else 999
+                            
+                            # Calculate liquidity score
+                            score = calculate_liquidity_score(bid, ask, mid)
                             
                             # Find the strike info
                             strike_info = None
@@ -69,7 +99,8 @@ async def check_option_liquidity():
                                     strike_info = s
                                     break
                             
-                            if strike_info and spread_pct < 10:  # Less than 10% spread
+                            # Keep if score >= 40 (not just <10% spread)
+                            if strike_info and score >= 40:
                                 liquid_strikes.append({
                                     "strike": strike_info["strike"],
                                     "type": strike_info["type"],
@@ -77,7 +108,8 @@ async def check_option_liquidity():
                                     "bid": round(bid, 2),
                                     "ask": round(ask, 2),
                                     "mid": round(mid, 2),
-                                    "spread_pct": round(spread_pct, 2)
+                                    "spread_pct": round(spread_pct, 2),
+                                    "liquidity_score": score
                                 })
                                 checked += 1
                                 
@@ -87,12 +119,18 @@ async def check_option_liquidity():
             await streamer.unsubscribe(Quote, symbols)
             
             if liquid_strikes:
+                # Sort by liquidity score
+                liquid_strikes.sort(key=lambda x: x["liquidity_score"], reverse=True)
+                
                 liquid_chains[ticker] = {
                     **chain_data,
                     "liquid_strikes": liquid_strikes,
-                    "liquid_count": len(liquid_strikes)
+                    "liquid_count": len(liquid_strikes),
+                    "avg_liquidity_score": round(
+                        sum(s["liquidity_score"] for s in liquid_strikes) / len(liquid_strikes), 1
+                    )
                 }
-                print(f"   ✅ {len(liquid_strikes)} liquid strikes")
+                print(f"   ✅ {len(liquid_strikes)} liquid strikes (avg score: {liquid_chains[ticker]['avg_liquidity_score']})")
             else:
                 print(f"   ❌ No liquid strikes found")
     
@@ -116,20 +154,25 @@ def save_liquid_chains(liquid_chains):
         print("❌ FATAL: No liquid options found")
         sys.exit(1)
     
-    # Show summary
     total_liquid = sum(c["liquid_count"] for c in liquid_chains.values())
     print(f"   Total liquid strikes: {total_liquid}")
+    
+    # Show score distribution
+    all_scores = []
+    for chain in liquid_chains.values():
+        all_scores.extend([s["liquidity_score"] for s in chain["liquid_strikes"]])
+    
+    if all_scores:
+        print(f"   Score range: {min(all_scores)} - {max(all_scores)}")
+        print(f"   Average score: {sum(all_scores)/len(all_scores):.1f}")
 
 def main():
     """Main execution"""
     print("="*60)
-    print("STEP 4: Check Liquidity")
+    print("STEP 4: Check Liquidity (ENHANCED)")
     print("="*60)
     
-    # Check liquidity
     liquid_chains = asyncio.run(check_option_liquidity())
-    
-    # Save results
     save_liquid_chains(liquid_chains)
     
     print("✅ Step 4 complete: liquid_chains.json created")
