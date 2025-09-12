@@ -1,0 +1,37 @@
+Give me exactly 22 stock tickers for credit spreads.
+2 per SPDR sector.
+
+DO NOT write analysis code.
+DO NOT import libraries.
+DO NOT explain.
+
+ONLY output these two Python variables:
+
+STOCKS = ["AAPL", "MSFT", "JPM", "BAC", "UNH", "JNJ", "AMZN", "TSLA", "PG", "WMT", "XOM", "CVX", "CAT", "BA", "LIN", "APD", "PLD", "AMT", "NEE", "SO", "META", "GOOGL"]
+
+EDGE_REASON = {
+    "AAPL": "iPhone 16 launch",
+    "MSFT": "AI cloud growth",
+    "JPM": "Rate cut benefit",
+    "BAC": "Trading revenue",
+    "UNH": "Medicare advantage", 
+    "JNJ": "Talc settlement done",
+    "AMZN": "Holiday prep",
+    "TSLA": "Robotaxi event",
+    "PG": "Pricing power",
+    "WMT": "Market share gains",
+    "XOM": "Oil at $90",
+    "CVX": "Buyback program",
+    "CAT": "Infrastructure spend",
+    "BA": "737 Max orders",
+    "LIN": "Industrial demand",
+    "APD": "Hydrogen play",
+    "PLD": "E-commerce growth",
+    "AMT": "5G buildout",
+    "NEE": "Solar expansion",
+    "SO": "Stable dividends",
+    "META": "AI monetization",
+    "GOOGL": "Search dominance"
+}
+
+Replace with TODAY's best picks based on current market.

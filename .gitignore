@@ -1,0 +1,15 @@
+# Secrets
+config.py
+.env
+
+# Output files
+*.json
+*.csv
+stocks.py
+
+# Python
+__pycache__/
+*.pyc
+
+# Mac
+.DS_Store
