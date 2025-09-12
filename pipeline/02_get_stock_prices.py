@@ -5,14 +5,26 @@ No fallbacks - real data only
 import asyncio
 import json
 import sys
+import os
 from datetime import datetime
+
+# Handle imports whether running from pipeline/ or from parent
+if os.path.exists('config.py'):
+    from config import USERNAME, PASSWORD
+else:
+    sys.path.append('..')
+    from config import USERNAME, PASSWORD
+
 from tastytrade import Session, DXLinkStreamer
 from tastytrade.dxfeed import Quote
-from config import USERNAME, PASSWORD
 
 # Import the stocks
 try:
-    from stocks import STOCKS
+    if os.path.exists('data/stocks.py'):
+        sys.path.append('data')
+        from stocks import STOCKS
+    else:
+        from data.stocks import STOCKS
 except ImportError:
     print("❌ stocks.py not found - run call_gpt_1.py first")
     sys.exit(1)
@@ -78,7 +90,7 @@ def save_prices(prices, failed):
         "missing_tickers": failed
     }
     
-    with open("stock_prices.json", "w") as f:
+    with open("data/stock_prices.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n📊 Results:")

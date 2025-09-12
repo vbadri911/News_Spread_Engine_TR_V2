@@ -8,12 +8,12 @@ import sys
 from datetime import datetime
 from tastytrade import Session, DXLinkStreamer
 from tastytrade.dxfeed import Quote
+sys.path.append("..")
 from config import USERNAME, PASSWORD
-
 def load_chains():
     """Load chains from previous step"""
     try:
-        with open("chains.json", "r") as f:
+        with open("data/chains.json", "r") as f:
             data = json.load(f)
         return data["chains"]
     except FileNotFoundError:
@@ -144,7 +144,7 @@ def save_liquid_chains(liquid_chains):
         "liquid_chains": liquid_chains
     }
     
-    with open("liquid_chains.json", "w") as f:
+    with open("data/liquid_chains.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n📊 Results:")

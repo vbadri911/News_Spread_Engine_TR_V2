@@ -16,17 +16,17 @@ def load_comprehensive_data():
     """Load ALL data we've collected"""
     data = {}
     
-    with open("report_table.json", "r") as f:
+    with open("data/report_table.json", "r") as f:
         data["trades"] = json.load(f)["report_table"]
     
-    with open("stock_prices.json", "r") as f:
+    with open("data/stock_prices.json", "r") as f:
         data["prices"] = json.load(f)["prices"]
     
-    with open("greeks.json", "r") as f:
+    with open("data/greeks.json", "r") as f:
         greeks = json.load(f)
         data["greeks_coverage"] = greeks.get("overall_coverage", 0)
     
-    with open("ranked_spreads.json", "r") as f:
+    with open("data/ranked_spreads.json", "r") as f:
         ranked = json.load(f)
         data["ranking_summary"] = ranked["summary"]
     
@@ -192,7 +192,7 @@ def main():
         display_top9(gpt_response, data["trades"])
         
         # Save full response
-        with open("top9_analysis.json", "w") as f:
+        with open("data/top9_analysis.json", "w") as f:
             json.dump({
                 "timestamp": datetime.now().isoformat(),
                 "analysis": gpt_response,

@@ -49,12 +49,12 @@ try:
     reasons = exec_globals.get("EDGE_REASON", {})
     
     # Save to stocks.py
-    with open("stocks.py", "w") as f:
+    with open("data/stocks.py", "w") as f:
         f.write(f"# Generated {datetime.now()}\n")
         f.write(f"STOCKS = {stocks}\n\n")
         f.write(f"EDGE_REASON = {reasons}\n")
     
-    print(f"✅ Saved {len(stocks)} stocks to stocks.py")
+    print(f"✅ Saved {len(stocks)} stocks to data/stocks.py")
     
 except Exception as e:
     print(f"❌ Parse error: {e}")

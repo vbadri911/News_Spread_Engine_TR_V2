@@ -7,12 +7,12 @@ import sys
 from datetime import datetime, timedelta
 from tastytrade import Session
 from tastytrade.instruments import get_option_chain
+sys.path.append("..")
 from config import USERNAME, PASSWORD
-
 def load_stock_prices():
     """Load stocks that have prices"""
     try:
-        with open("stock_prices.json", "r") as f:
+        with open("data/stock_prices.json", "r") as f:
             data = json.load(f)
         return data["prices"]
     except FileNotFoundError:
@@ -109,7 +109,7 @@ def save_chains(chains, failed):
         "missing_tickers": failed
     }
     
-    with open("chains.json", "w") as f:
+    with open("data/chains.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n📊 Results:")

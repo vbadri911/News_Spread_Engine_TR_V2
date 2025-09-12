@@ -9,7 +9,7 @@ from datetime import datetime
 def load_greeks():
     """Load Greeks data"""
     try:
-        with open("greeks.json", "r") as f:
+        with open("data/greeks.json", "r") as f:
             data = json.load(f)
         return data["greeks"]
     except FileNotFoundError:
@@ -112,7 +112,7 @@ def save_spreads(spreads):
         "spreads": spreads
     }
     
-    with open("spreads.json", "w") as f:
+    with open("data/spreads.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n📊 Results:")

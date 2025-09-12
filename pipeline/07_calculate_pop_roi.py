@@ -11,7 +11,7 @@ from scipy.stats import norm
 def load_spreads():
     """Load spreads data"""
     try:
-        with open("spreads.json", "r") as f:
+        with open("data/spreads.json", "r") as f:
             data = json.load(f)
         return data["spreads"]
     except FileNotFoundError:
@@ -80,7 +80,7 @@ def save_analyzed_spreads(spreads):
         "analyzed_spreads": spreads
     }
     
-    with open("analyzed_spreads.json", "w") as f:
+    with open("data/analyzed_spreads.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n📊 Results:")

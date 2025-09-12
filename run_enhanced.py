@@ -84,34 +84,34 @@ class DataFlowPipeline:
         
         try:
             # Load key files to show the flow
-            with open("stock_prices.json", "r") as f:
+            with open("data/stock_prices.json", "r") as f:
                 prices = json.load(f)
                 print(f"\n▶ PRICES: {prices['success']} stocks → feeding options scanner")
                 
-            with open("chains.json", "r") as f:
+            with open("data/chains.json", "r") as f:
                 chains = json.load(f)
                 total_options = sum(c["strikes_count"] for c in chains["chains"].values())
                 print(f"▶ OPTIONS: {total_options} strikes → filtering for liquidity")
                 
-            with open("liquid_chains.json", "r") as f:
+            with open("data/liquid_chains.json", "r") as f:
                 liquid = json.load(f)
                 liquid_count = sum(c["liquid_count"] for c in liquid["liquid_chains"].values())
                 print(f"▶ LIQUIDITY: {liquid_count} liquid → getting Greeks")
                 
-            with open("greeks.json", "r") as f:
+            with open("data/greeks.json", "r") as f:
                 greeks = json.load(f)
                 coverage = greeks.get("overall_coverage", 0)
                 print(f"▶ GREEKS: {coverage:.1f}% coverage → building spreads")
                 
-            with open("spreads.json", "r") as f:
+            with open("data/spreads.json", "r") as f:
                 spreads = json.load(f)
                 print(f"▶ SPREADS: {spreads['total_spreads']} candidates → calculating PoP")
                 
-            with open("ranked_spreads.json", "r") as f:
+            with open("data/ranked_spreads.json", "r") as f:
                 ranked = json.load(f)
                 print(f"▶ RANKING: {ranked['summary']['enter']} high-quality → GPT analysis")
                 
-            with open("top9_analysis.json", "r") as f:
+            with open("data/top9_analysis.json", "r") as f:
                 print(f"▶ GPT: Top 9 trades selected → READY TO EXECUTE")
                 
         except:
@@ -120,7 +120,7 @@ class DataFlowPipeline:
     def show_final_trades(self):
         """Show the money makers"""
         try:
-            with open("top9_analysis.json", "r") as f:
+            with open("data/top9_analysis.json", "r") as f:
                 data = json.load(f)
                 
             print("\n" + "💰"*40)
@@ -155,16 +155,16 @@ def main():
         return
     
     steps = [
-        (1, "call_gpt_simple.py", "GPT SELECTS 22 STOCKS"),
-        (2, "get_stock_prices.py", "REAL-TIME PRICES FLOW IN"),
-        (3, "get_options_chains.py", "OPTIONS CHAINS DISCOVERED"),
-        (4, "check_liquidity.py", "LIQUIDITY FILTERS APPLIED"),
-        (5, "get_greeks.py", "GREEKS BATCH COLLECTED"),
-        (6, "calculate_spreads_fixed.py", "CREDIT SPREADS BUILT"),
-        (7, "calculate_pop_roi.py", "PROBABILITY CALCULATED"),
-        (8, "rank_spreads.py", "MULTI-FACTOR RANKING"),
-        (9, "build_report_table.py", "REPORT PREPARED"),
-        (10, "gpt_risk_analysis_top9.py", "GPT RISK ANALYSIS"),
+        (1, "pipeline/01_call_gpt_simple.py", "GPT SELECTS 22 STOCKS"),
+        (2, "pipeline/02_get_stock_prices.py", "REAL-TIME PRICES FLOW IN"),
+        (3, "pipeline/03_get_options_chains.py", "OPTIONS CHAINS DISCOVERED"),
+        (4, "pipeline/04_check_liquidity.py", "LIQUIDITY FILTERS APPLIED"),
+        (5, "pipeline/05_get_greeks.py", "GREEKS BATCH COLLECTED"),
+        (6, "pipeline/06_calculate_spreads_fixed.py", "CREDIT SPREADS BUILT"),
+        (7, "pipeline/07_calculate_pop_roi.py", "PROBABILITY CALCULATED"),
+        (8, "pipeline/08_rank_spreads.py", "MULTI-FACTOR RANKING"),
+        (9, "pipeline/09_build_report_table.py", "REPORT PREPARED"),
+        (10, "pipeline/10_gpt_risk_analysis_top9.py", "GPT RISK ANALYSIS"),
     ]
     
     print("\n⚡ INITIATING DATA FLOW SEQUENCE...")

@@ -9,7 +9,7 @@ from datetime import datetime
 def load_analyzed_spreads():
     """Load analyzed spreads"""
     try:
-        with open("analyzed_spreads.json", "r") as f:
+        with open("data/analyzed_spreads.json", "r") as f:
             data = json.load(f)
         return data["analyzed_spreads"]
     except FileNotFoundError:
@@ -83,7 +83,7 @@ def save_ranked_spreads(spreads):
         "watch_list": watch[:10]     # Top 10 to watch
     }
     
-    with open("ranked_spreads.json", "w") as f:
+    with open("data/ranked_spreads.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n📊 Ranking Results:")

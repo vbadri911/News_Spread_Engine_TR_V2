@@ -6,13 +6,13 @@ from datetime import datetime
 
 def load_data():
     """Load all necessary data"""
-    with open("top9_analysis.json", "r") as f:
+    with open("data/top9_analysis.json", "r") as f:
         gpt_analysis = json.load(f)["analysis"]
     
-    with open("ranked_spreads.json", "r") as f:
+    with open("data/ranked_spreads.json", "r") as f:
         spreads = json.load(f)["ranked_spreads"]
     
-    with open("stocks.py", "r") as f:
+    with open("data/stocks.py", "r") as f:
         # Parse for EDGE_REASON
         exec(f.read(), globals())
     

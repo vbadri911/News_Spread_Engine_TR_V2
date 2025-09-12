@@ -9,7 +9,7 @@ from datetime import datetime
 def load_ranked_spreads():
     """Load ranked spreads"""
     try:
-        with open("ranked_spreads.json", "r") as f:
+        with open("data/ranked_spreads.json", "r") as f:
             data = json.load(f)
         return data
     except FileNotFoundError:
@@ -19,7 +19,7 @@ def load_ranked_spreads():
 def load_edge_reasons():
     """Load original edge reasons from GPT"""
     try:
-        from stocks import EDGE_REASON
+        from data.stocks import EDGE_REASON
         return EDGE_REASON
     except ImportError:
         return {}
@@ -109,7 +109,7 @@ def save_report_table(entries):
         "report_table": entries
     }
     
-    with open("report_table.json", "w") as f:
+    with open("data/report_table.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n📊 Report Table:")

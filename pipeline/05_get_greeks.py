@@ -9,14 +9,14 @@ from datetime import datetime
 from collections import defaultdict
 from tastytrade import Session, DXLinkStreamer
 from tastytrade.dxfeed import Greeks
+sys.path.append("..")
 from config import USERNAME, PASSWORD
-
 async def get_greeks_100_coverage():
     """Get Greeks with 100% coverage target"""
     print("🧮 Getting Greeks - TARGET: 100% COVERAGE...")
     
     # Load chains
-    with open("liquid_chains.json", "r") as f:
+    with open("data/liquid_chains.json", "r") as f:
         chains = json.load(f)["liquid_chains"]
     
     sess = Session(USERNAME, PASSWORD)
@@ -163,7 +163,7 @@ async def get_greeks_100_coverage():
         "greeks": dict(by_ticker)
     }
     
-    with open("greeks.json", "w") as f:
+    with open("data/greeks.json", "w") as f:
         json.dump(output, f, indent=2)
     
     print(f"\n✅ Greeks saved with {total_coverage:.1f}% coverage")
