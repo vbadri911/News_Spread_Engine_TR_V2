@@ -7,8 +7,11 @@ import sys
 from datetime import datetime
 from openai import OpenAI
 
-API_KEY = os.getenv("OPENAI_API_KEY")
-if not API_KEY:
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import OPENAI_API_KEY
+
+if not OPENAI_API_KEY:
     print("❌ Missing OPENAI_API_KEY")
     sys.exit(1)
 
@@ -169,7 +172,7 @@ def main():
     
     # Call GPT
     print("\n🤖 Getting TOP 9 trades from GPT...")
-    client = OpenAI(api_key=API_KEY)
+    client = OpenAI(api_key=OPENAI_API_KEY)
     
     try:
         response = client.chat.completions.create(

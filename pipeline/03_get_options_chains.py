@@ -4,11 +4,15 @@ Gets strikes from 70% to 130% of stock price
 """
 import json
 import sys
+import os
 from datetime import datetime, timedelta
 from tastytrade import Session
 from tastytrade.instruments import get_option_chain
-sys.path.append("..")
+
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import USERNAME, PASSWORD
+
 def load_stock_prices():
     """Load stocks that have prices"""
     try:

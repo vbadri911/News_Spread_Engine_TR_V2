@@ -5,12 +5,16 @@ Aggressive mode - we want ALL the data
 import asyncio
 import json
 import sys
+import os
 from datetime import datetime
 from collections import defaultdict
 from tastytrade import Session, DXLinkStreamer
 from tastytrade.dxfeed import Greeks
-sys.path.append("..")
+
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import USERNAME, PASSWORD
+
 async def get_greeks_100_coverage():
     """Get Greeks with 100% coverage target"""
     print("🧮 Getting Greeks - TARGET: 100% COVERAGE...")

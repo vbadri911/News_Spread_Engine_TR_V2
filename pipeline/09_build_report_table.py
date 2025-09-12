@@ -4,7 +4,11 @@ Formats all data for final validation
 """
 import json
 import sys
+import os
 from datetime import datetime
+
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def load_ranked_spreads():
     """Load ranked spreads"""
@@ -41,12 +45,16 @@ def build_report_table():
     # Map sectors (simplified SPDR mapping)
     sector_map = {
         "AAPL": "XLK", "MSFT": "XLK", "NVDA": "XLK", "GOOGL": "XLK",
-        "JPM": "XLF", "BAC": "XLF", "V": "XLF", "MA": "XLF",
+        "JPM": "XLF", "BAC": "XLF", "GS": "XLF", "MA": "XLF",
         "JNJ": "XLV", "UNH": "XLV", "CVS": "XLV", "PFE": "XLV",
         "AMZN": "XLY", "TSLA": "XLY", "HD": "XLY", "DIS": "XLY",
         "PG": "XLP", "KO": "XLP", "WMT": "XLP", "COST": "XLP",
         "XOM": "XLE", "CVX": "XLE", "COP": "XLE",
-        "BA": "XLI", "CAT": "XLI", "HON": "XLI", "UNP": "XLI"
+        "BA": "XLI", "CAT": "XLI", "HON": "XLI", "UNP": "XLI",
+        "LIN": "XLB", "FCX": "XLB", "APD": "XLB",
+        "PLD": "XLRE", "AMT": "XLRE",
+        "NEE": "XLU", "DUK": "XLU",
+        "META": "XLC", "GOOGL": "XLC"
     }
     
     # Process ENTER trades first

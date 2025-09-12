@@ -8,25 +8,18 @@ import sys
 import os
 from datetime import datetime
 
-# Handle imports whether running from pipeline/ or from parent
-if os.path.exists('config.py'):
-    from config import USERNAME, PASSWORD
-else:
-    sys.path.append('..')
-    from config import USERNAME, PASSWORD
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import USERNAME, PASSWORD
 
 from tastytrade import Session, DXLinkStreamer
 from tastytrade.dxfeed import Quote
 
 # Import the stocks
 try:
-    if os.path.exists('data/stocks.py'):
-        sys.path.append('data')
-        from stocks import STOCKS
-    else:
-        from data.stocks import STOCKS
+    from data.stocks import STOCKS
 except ImportError:
-    print("❌ stocks.py not found - run call_gpt_1.py first")
+    print("❌ stocks.py not found - run step 1 first")
     sys.exit(1)
 
 async def get_real_prices():

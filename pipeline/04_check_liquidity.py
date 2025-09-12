@@ -5,11 +5,15 @@ Scores each option 0-100 based on spread, volume, and price
 import asyncio
 import json
 import sys
+import os
 from datetime import datetime
 from tastytrade import Session, DXLinkStreamer
 from tastytrade.dxfeed import Quote
-sys.path.append("..")
+
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import USERNAME, PASSWORD
+
 def load_chains():
     """Load chains from previous step"""
     try:
