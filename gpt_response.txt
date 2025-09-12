@@ -1,0 +1,26 @@
+STOCKS = ["AAPL", "MSFT", "JPM", "BAC", "UNH", "JNJ", "AMZN", "TSLA", "PG", "WMT", "XOM", "CVX", "CAT", "BA", "LIN", "APD", "PLD", "AMT", "NEE", "SO", "META", "GOOGL"]
+
+EDGE_REASON = {
+    "AAPL": "5G iPhone dominance",
+    "MSFT": "Cloud services growth",
+    "JPM": "Strong balance sheet",
+    "BAC": "Increased lending activity",
+    "UNH": "Aging population",
+    "JNJ": "Pharmaceutical innovations",
+    "AMZN": "E-commerce dominance",
+    "TSLA": "Electric vehicle market leader",
+    "PG": "Consumer staples demand",
+    "WMT": "E-commerce growth",
+    "XOM": "Increased energy demand",
+    "CVX": "Renewable energy investments",
+    "CAT": "Global infrastructure development",
+    "BA": "Air travel recovery",
+    "LIN": "Industrial gas demand",
+    "APD": "Clean energy development",
+    "PLD": "Real estate market growth",
+    "AMT": "5G infrastructure expansion",
+    "NEE": "Renewable energy projects",
+    "SO": "Utility sector stability",
+    "META": "Metaverse development",
+    "GOOGL": "Digital advertising growth"
+}
