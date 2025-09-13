@@ -1,5 +1,5 @@
 """
-Format Top 9 Trades as a Clean Table
+Format Top 9 Trades as a Clean Table with Entry/Exit Details
 """
 import json
 import sys
@@ -17,19 +17,16 @@ def load_data():
     with open("data/ranked_spreads.json", "r") as f:
         spreads = json.load(f)["ranked_spreads"]
     
-    # Load edge reasons
-    try:
-        from data.stocks import EDGE_REASON
-    except:
-        EDGE_REASON = {}
+    with open("data/report_table.json", "r") as f:
+        report = json.load(f)["report_table"]
     
-    return gpt_analysis, spreads
+    return gpt_analysis, spreads, report
 
-def parse_top9_from_gpt(analysis_text):
-    """Extract top 9 trades from GPT analysis"""
+def parse_top9_with_details(analysis_text, spreads, report):
+    """Extract top 9 trades with full details from all sources"""
     trades = []
     
-    # Parse each trade from the analysis
+    # Parse each trade from GPT analysis
     lines = analysis_text.split('\n')
     current_trade = None
     
@@ -43,16 +40,40 @@ def parse_top9_from_gpt(analysis_text):
                 trade_type = ' '.join(parts[2:-1])
                 strikes = parts[-1]
                 
+                # Find matching spread in ranked data for DTE
+                dte = None
+                net_credit = None
+                max_loss = None
+                for spread in spreads:
+                    if (spread['ticker'] == ticker and 
+                        spread['type'] == trade_type and
+                        strikes in f"${spread['short_strike']:.0f}/${spread['long_strike']:.0f}"):
+                        dte = spread['expiration']['dte']
+                        net_credit = spread['net_credit']
+                        max_loss = spread['max_loss']
+                        break
+                
+                # If not found in spreads, check report table
+                if not dte:
+                    for entry in report:
+                        if entry['ticker'] == ticker and strikes in entry['legs']:
+                            dte = entry['dte']
+                            net_credit = float(entry['net_credit'].replace('$', ''))
+                            max_loss = float(entry['max_loss'].replace('$', ''))
+                            break
+                
                 current_trade = {
                     'rank': rank,
                     'ticker': ticker,
                     'type': trade_type,
-                    'strikes': strikes
+                    'strikes': strikes,
+                    'dte': dte or 'N/A',
+                    'net_credit': net_credit,
+                    'max_loss': max_loss
                 }
         
         # Look for score line
         elif current_trade and 'Score:' in line and 'ROI:' in line:
-            # Parse metrics from line like "Score: 109.1 | ROI: 138.1% | PoP: 79.0% | Buffer: 3.7%"
             parts = line.strip().split('|')
             for part in parts:
                 if 'Score:' in part:
@@ -67,72 +88,115 @@ def parse_top9_from_gpt(analysis_text):
             trades.append(current_trade)
             current_trade = None
     
-    return trades[:9]  # Return only top 9
+    return trades[:9]
 
-def print_table(trades):
-    """Print formatted table"""
+def print_detailed_table(trades):
+    """Print detailed table with entry/exit plans"""
     # Header
-    print("\n" + "="*120)
-    print("TOP 9 CREDIT SPREADS - READY FOR EXECUTION")
+    print("\n" + "="*140)
+    print("TOP 9 CREDIT SPREADS - COMPLETE TRADING PLAN")
     print(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    print("="*120)
+    print("="*140)
     
-    # Table header
-    print(f"\n{'#':<4} {'Ticker':<8} {'Type':<12} {'Strikes':<15} {'ROI':<10} {'PoP':<10} {'Buffer':<10} {'Score':<10}")
-    print("-"*120)
+    # For each trade, show full details
+    for i, trade in enumerate(trades, 1):
+        print(f"\n{'='*70}")
+        print(f"#{i}. {trade['ticker']} {trade['type']} {trade['strikes']}")
+        print(f"{'='*70}")
+        
+        # Metrics
+        print(f"📊 METRICS:")
+        print(f"   • ROI: {trade.get('roi', 'N/A')}")
+        print(f"   • PoP: {trade.get('pop', 'N/A')}")
+        print(f"   • DTE: {trade['dte']} days")
+        print(f"   • Buffer: {trade.get('buffer', 'N/A')}")
+        print(f"   • Score: {trade.get('score', 'N/A')}")
+        
+        # Entry plan
+        credit = trade.get('net_credit', 0)
+        print(f"\n📍 ENTRY PLAN:")
+        if 'Put' in trade['type']:
+            short_strike = trade['strikes'].split('/')[0].replace('$', '')
+            long_strike = trade['strikes'].split('/')[1].replace('$', '')
+            print(f"   1. SELL to open {short_strike} Put")
+            print(f"   2. BUY to open {long_strike} Put")
+        else:  # Call spread
+            short_strike = trade['strikes'].split('/')[0].replace('$', '')
+            long_strike = trade['strikes'].split('/')[1].replace('$', '')
+            print(f"   1. SELL to open {short_strike} Call")
+            print(f"   2. BUY to open {long_strike} Call")
+        
+        if credit:
+            print(f"   • Target Credit: ${credit:.2f} or better")
+            print(f"   • Use LIMIT order at mid-price")
+            print(f"   • If not filled in 5 mins, improve price by $0.05")
+        
+        # Exit plan
+        print(f"\n🎯 EXIT PLAN:")
+        if credit:
+            profit_target = credit * 0.25
+            stop_loss = credit * 2
+            print(f"   • PROFIT TARGET: Close at ${profit_target:.2f} debit (25% of max profit)")
+            print(f"   • STOP LOSS: Close if debit reaches ${stop_loss:.2f} (2x credit)")
+        print(f"   • TIME EXIT: Close at 7 DTE if not hit targets")
+        print(f"   • ASSIGNMENT: Roll or take assignment if ITM at expiry")
     
-    # Table rows
-    for trade in trades:
-        print(f"{trade['rank']:<4} {trade['ticker']:<8} {trade['type']:<12} {trade['strikes']:<15} "
-              f"{trade.get('roi', 'N/A'):<10} {trade.get('pop', 'N/A'):<10} "
-              f"{trade.get('buffer', 'N/A'):<10} {trade.get('score', 'N/A'):<10}")
-    
-    print("-"*120)
-    
-    # Summary
-    print(f"\n📊 SUMMARY:")
-    print(f"   • Top Trade: {trades[0]['ticker']} {trades[0]['type']} {trades[0]['strikes']}")
-    print(f"   • Best ROI: {trades[0].get('roi', 'N/A')}")
-    print(f"   • Average PoP: ~75%")
-    print(f"\n💡 NOTES:")
-    print("   • Enter trades in order shown")
-    print("   • Use limit orders at mid-price or better")
-    print("   • Set stop loss at 2x credit received")
-    print("   • Take profit at 25-50% of max gain")
+    # Portfolio summary
+    print(f"\n{'='*140}")
+    print("💼 PORTFOLIO MANAGEMENT:")
+    print(f"   • Total trades: {len(trades)}")
+    if trades[0].get('net_credit'):
+        total_credit = sum(t.get('net_credit', 0) for t in trades)
+        total_risk = sum(t.get('max_loss', 0) for t in trades) if trades[0].get('max_loss') else total_credit * 4
+        print(f"   • Total credit: ${total_credit:.2f}")
+        print(f"   • Total risk capital: ${total_risk:.2f}")
+    print(f"   • Position sizing: Max 5% of account per trade")
+    print(f"   • Enter trades in order shown for best diversification")
 
-def save_csv(trades):
-    """Save as CSV for Excel"""
-    filename = f"top9_trades_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+def save_detailed_csv(trades):
+    """Save detailed CSV"""
+    filename = f"top9_detailed_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
     
     with open(filename, "w") as f:
         # Header
-        f.write("Rank,Ticker,Type,Strikes,ROI,PoP,Buffer,Score\n")
+        f.write("Rank,Ticker,Type,Strikes,DTE,ROI,PoP,Buffer,Score,Credit,Max Loss,")
+        f.write("Entry Plan,Profit Target,Stop Loss\n")
         
         # Data
-        for trade in trades:
-            f.write(f"{trade['rank']},{trade['ticker']},{trade['type']},{trade['strikes']},")
-            f.write(f"{trade.get('roi', '')},{trade.get('pop', '')},{trade.get('buffer', '')},{trade.get('score', '')}\n")
+        for i, trade in enumerate(trades, 1):
+            credit = trade.get('net_credit', 0)
+            max_loss = trade.get('max_loss', 0)
+            profit_target = credit * 0.25 if credit else 0
+            stop_loss = credit * 2 if credit else 0
+            
+            entry_plan = f"Sell {trade['strikes'].split('/')[0]} Buy {trade['strikes'].split('/')[1]}"
+            
+            f.write(f"{i},{trade['ticker']},{trade['type']},{trade['strikes']},")
+            f.write(f"{trade['dte']},{trade.get('roi', '')},{trade.get('pop', '')},")
+            f.write(f"{trade.get('buffer', '')},{trade.get('score', '')},")
+            f.write(f"${credit:.2f},${max_loss:.2f},")
+            f.write(f"{entry_plan},${profit_target:.2f},${stop_loss:.2f}\n")
     
-    print(f"\n📁 Saved to {filename}")
+    print(f"\n📁 Detailed trades saved to {filename}")
 
 def main():
     print("="*60)
-    print("STEP 11: Format Top 9 Trades")
+    print("STEP 11: Format Top 9 Trades with Full Details")
     print("="*60)
     
     print("Loading data...")
-    gpt_analysis, spreads = load_data()
+    gpt_analysis, spreads, report = load_data()
     
-    print("Parsing top 9 trades...")
-    trades = parse_top9_from_gpt(gpt_analysis)
+    print("Parsing trades with details...")
+    trades = parse_top9_with_details(gpt_analysis, spreads, report)
     
     if trades:
-        # Print the table
-        print_table(trades)
+        # Print detailed table
+        print_detailed_table(trades)
         
         # Save CSV
-        save_csv(trades)
-        print("\n✅ Step 11 complete: Top 9 trades formatted and saved")
+        save_detailed_csv(trades)
+        print("\n✅ Complete trading plan generated!")
     else:
         print("❌ Could not parse trades from GPT analysis")
 
