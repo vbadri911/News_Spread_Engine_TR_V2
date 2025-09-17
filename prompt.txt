@@ -1,31 +1,25 @@
-Output ONLY these two Python variables. NO IMPORTS. NO OTHER CODE.
+Select EXACTLY 22 stocks optimized for credit spread trading based on historical characteristics.
 
-STOCKS = ["AAPL", "MSFT", "JPM", "GS", "UNH", "CVS", "AMZN", "TSLA", "PG", "KO", "XOM", "CVX", "BA", "CAT", "LIN", "FCX", "PLD", "AMT", "NEE", "DUK", "META", "GOOGL"]
+SELECTION CRITERIA:
+1. LIQUIDITY - Choose stocks known for highly liquid options markets
+2. PRICE RANGE - Prefer stocks typically trading $50-$500 for optimal strike spacing  
+3. SECTOR DIVERSITY - Maximum 3 stocks per sector, cover all 11 S&P sectors
+4. VOLATILITY PROFILE - Mix of:
+   - Stable dividend stocks (lower IV but consistent)
+   - Growth tech names (higher IV when sector rotates)
+   - Cyclical industrials (IV spikes on macro events)
+5. OPTIONS AVAILABILITY - Only stocks with weekly options
+6. MARKET CAP - Focus on large caps ($50B+) for stability
 
+REQUIRED OUTPUT FORMAT:
+STOCKS = [list of exactly 22 ticker symbols]
 EDGE_REASON = {
-    "AAPL": "XLK - highest options volume",
-    "MSFT": "XLK - tight spreads",
-    "JPM": "XLF - most liquid bank",
-    "GS": "XLF - high IV premium",
-    "UNH": "XLV - healthcare leader",
-    "CVS": "XLV - consistent volatility",
-    "AMZN": "XLY - retail options favorite",
-    "TSLA": "XLY - weekly options liquidity",
-    "PG": "XLP - defensive with options",
-    "KO": "XLP - dividend aristocrat spreads",
-    "XOM": "XLE - energy options leader",
-    "CVX": "XLE - oil volatility play",
-    "BA": "XLI - aerospace options",
-    "CAT": "XLI - industrial bellwether",
-    "LIN": "XLB - materials leader",
-    "FCX": "XLB - copper volatility",
-    "PLD": "XLRE - REIT options leader",
-    "AMT": "XLRE - tower REIT liquidity",
-    "NEE": "XLU - utility with options",
-    "DUK": "XLU - regulated utility spreads",
-    "META": "XLC - social media volatility",
-    "GOOGL": "XLC - search giant options"
+  "TICKER": "SECTOR - why this stock's options are good for spreads"
 }
 
-DO NOT ADD ANY IMPORT STATEMENTS.
-ONLY OUTPUT THE TWO VARIABLES ABOVE.
+Example reasons:
+- "XLF - bank with wide strikes and earnings volatility"
+- "XLK - tech leader with weekly liquidity"
+- "XLE - energy with commodity-driven IV"
+
+NO IMPORTS. NO OTHER CODE. ONLY THE TWO VARIABLES.

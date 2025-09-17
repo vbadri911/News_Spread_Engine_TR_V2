@@ -1,15 +1,18 @@
-# Secrets
+# Sensitive
 config.py
 .env
 
-# Output files
-*.json
-*.csv
-stocks.py
+# Data files (regenerated each run)
+data/*.json
+data/*.csv
 
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
 
 # Mac
 .DS_Store
