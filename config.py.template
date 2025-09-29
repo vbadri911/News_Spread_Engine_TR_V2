@@ -1,6 +1,0 @@
-# TastyTrade Credentials
-USERNAME = "your_tastytrade_username"
-PASSWORD = "your_tastytrade_password"
-
-# OpenAI API Key
-OPENAI_API_KEY = "your_openai_api_key"
