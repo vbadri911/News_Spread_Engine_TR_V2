@@ -1,7 +1,13 @@
 # Credit Spread Finder - Presentation README
 
+A high percentage of people lose money in day trading, with some studies indicating that as many as 95–97% of day traders are not consistently profitable. 
+
+<img width="1234" height="692" alt="image" src="https://github.com/user-attachments/assets/0b336dbf-38f7-4847-a7c5-e39a6ffae32b" />
+
+
 ## Clear Message
-**Purpose:** Find the 9 best options trades from 500 stocks in 3 minutes
+
+**Purpose:** Find the 9 best options trades (credit spreads) from 500 stock tickers in 3 minutes
 
 **Sound bite:** "Stop guessing. Start knowing."
 
@@ -18,10 +24,10 @@
 - Stop losing on fake scanner data
 
 ### Who needs this?
-- Options traders tired of garbage scanners
+- Stock and Options traders tired of garbage scanners
 - Anyone trading with real money (not paper)
-- People who want data, not opinions
-- Traders with $5K+ accounts
+- People who want data, not opinions (news headlines)
+- Traders who want to make thier own decisions and not rely on an advisor. 
 
 ### Common ground
 Everyone wants:
