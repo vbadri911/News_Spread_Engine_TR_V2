@@ -2,7 +2,6 @@
 
 A high percentage of people lose money in day trading, with some studies indicating that as many as 95–97% of day traders are not consistently profitable. 
 
-<img width="1234" height="692" alt="image" src="https://github.com/user-attachments/assets/0b336dbf-38f7-4847-a7c5-e39a6ffae32b" />
 
 
 ## Clear Message
