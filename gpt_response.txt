@@ -1,48 +1,38 @@
-Unfortunately, it's not possible to generate the requested Python code without using any imports or other code. 
-
-To select stocks based on the provided criteria, we would need to access and analyze financial data, which typically requires importing libraries such as pandas and yfinance, and writing code to implement the selection criteria. 
-
-Here is an example of what the code might look like, although it does not meet your "no imports" and "no other code" requirements:
+This task requires data analysis and cannot be completed without importing necessary libraries and data. However, here's an example of how you might structure the code:
 
 ```python
-import pandas as pd
-import yfinance as yf
+STOCKS = [
+    "AAPL", "MSFT", "AMZN", "FB", "GOOGL",
+    "JPM", "JNJ", "V", "PG", "MA",
+    "INTC", "UNH", "BAC", "T", "HD",
+    "XOM", "DIS", "CMCSA", "KO", "PEP",
+    "PFE", "NFLX"
+]
 
-# Define the selection criteria
-liquidity_threshold = 1000000
-price_range = (50, 500)
-sector_limit = 3
-volatility_profile = ['low', 'medium', 'high']
-options_availability = True
-market_cap_threshold = 50000000000
-
-# Get the list of S&P 500 stocks
-sp500 = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')[0]
-sp500['Ticker symbol'] = sp500['Ticker symbol'].apply(lambda x: x.replace('.', '-'))
-
-# Initialize the output variables
-stocks = []
-edge_reason = {}
-
-# Loop through the stocks and apply the selection criteria
-for ticker in sp500['Ticker symbol']:
-    stock = yf.Ticker(ticker)
-    if (stock.info['averageDailyVolume10Day'] > liquidity_threshold and
-        price_range[0] <= stock.info['regularMarketPrice'] <= price_range[1] and
-        stocks.count(stock.info['sector']) < sector_limit and
-        stock.info['impliedSharesOutstanding'] in volatility_profile and
-        options_availability and
-        stock.info['marketCap'] > market_cap_threshold):
-        stocks.append(ticker)
-        edge_reason[ticker] = f"{stock.info['sector']} - {stock.info['longBusinessSummary']}"
-
-    # Stop when we have exactly 22 stocks
-    if len(stocks) == 22:
-        break
-
-# Output the result
-print('STOCKS =', stocks)
-print('EDGE_REASON =', edge_reason)
+EDGE_REASON = {
+    "AAPL": "Information Technology - tech leader with weekly liquidity",
+    "MSFT": "Information Technology - tech leader with weekly liquidity",
+    "AMZN": "Consumer Discretionary - e-commerce giant with high IV",
+    "FB": "Communication Services - social media leader with high IV",
+    "GOOGL": "Communication Services - tech leader with weekly liquidity",
+    "JPM": "Financials - bank with wide strikes and earnings volatility",
+    "JNJ": "Health Care - stable dividend stock",
+    "V": "Financials - payment service giant with high IV",
+    "PG": "Consumer Staples - stable dividend stock",
+    "MA": "Financials - payment service giant with high IV",
+    "INTC": "Information Technology - tech leader with weekly liquidity",
+    "UNH": "Health Care - stable dividend stock",
+    "BAC": "Financials - bank with wide strikes and earnings volatility",
+    "T": "Communication Services - telecom leader with stable dividends",
+    "HD": "Consumer Discretionary - retail giant with stable dividends",
+    "XOM": "Energy - energy company with commodity-driven IV",
+    "DIS": "Communication Services - entertainment leader with high IV",
+    "CMCSA": "Communication Services - cable giant with stable dividends",
+    "KO": "Consumer Staples - stable dividend stock",
+    "PEP": "Consumer Staples - stable dividend stock",
+    "PFE": "Health Care - pharmaceutical giant with stable dividends",
+    "NFLX": "Communication Services - streaming service leader with high IV"
+}
 ```
 
-This code would need to be modified to fit your exact needs, and the selection criteria might need to be adjusted based on the available data and your specific requirements.
+Please note that the above code doesn't perform any data analysis or selection based on the criteria you provided. It's just an example of the output format. To select stocks based on given criteria, you would need to analyze historical data using libraries like pandas and yfinance, which is not possible without imports.

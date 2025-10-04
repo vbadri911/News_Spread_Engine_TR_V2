@@ -146,7 +146,7 @@ def save_prices(prices, failed):
 def main():
     """Main execution"""
     print("="*60)
-    print("STEP 2: Get Real Stock Prices (ENHANCED)")
+    print("STEP 01: Get Real Stock Prices")
     print("="*60)
     
     # Get prices
@@ -155,7 +155,7 @@ def main():
     # Save results
     save_prices(prices, failed)
     
-    print("✅ Step 2 complete: stock_prices.json created")
+    print("✅ Step 01 complete: stock_prices.json created")
 
 if __name__ == "__main__":
     main()

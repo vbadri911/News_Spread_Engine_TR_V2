@@ -14,7 +14,7 @@ from config import USERNAME, PASSWORD
 
 async def get_connected_greeks():
     print("="*60)
-    print("STEP 5: Get Greeks (Connected)")
+    print("STEP 04: Get Greeks")
     print("="*60)
     
     # Load chains with symbols

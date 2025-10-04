@@ -97,7 +97,7 @@ async def check_option_liquidity():
 def main():
     """Main execution"""
     print("="*60)
-    print("STEP 4: Check Liquidity (FIXED)")
+    print("STEP 03: Check Liquidity")
     print("="*60)
     
     liquid_chains = asyncio.run(check_option_liquidity())

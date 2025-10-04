@@ -24,7 +24,7 @@ def load_stock_prices():
 
 async def get_chains():
     print("="*60)
-    print("STEP 3: Get Options Chains (Complete)")
+    print("STEP 02: Get Options Chains")
     print("="*60)
     
     prices = load_stock_prices()
