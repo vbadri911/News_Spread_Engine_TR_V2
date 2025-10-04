@@ -79,8 +79,38 @@ python3 pipeline/02_get_chains.py
 python3 pipeline/03_check_liquidity.py
 ```
 
+**Step 04:** Loads outpput from `Step 2`. Extracts all call/put symbols with bids > 0. Streams Greeks (IV/delta/theta/gamma/vega) from TastyTrade in 300-symbol batches for 8 seconds each. Embeds Greeks into chain structure at exact strike locations. Saves to `data/chains_with_greeks.json.`
+
+```bash
+python3 pipeline/04_get_greeks.py
+```
+
+**Step 5**
+
 ```bash
 ```
+
+**Step 6**
+
+```bash
+```
+
+**Step 7**
+
+```bash
+```
+
+**Step 8**
+
+```bash
+```
+
+**Step 9**
+
+```bash
+```
+
+**Step 10**
 
 ```bash
 ```
