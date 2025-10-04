@@ -24,36 +24,47 @@
 ```bash
 python3 pipeline/00a_get_sp500.py
 ```
+<img width="569" height="140" alt="image" src="https://github.com/user-attachments/assets/33d41e93-10e8-4d47-ad09-8ccfd6022801" />
+
 
 **Step 00B:** Stream live bid/ask quotes from TastyTrade for S&P500 stocks. Filter by price ($30-400) and spread (<2%). Saves liquid stocks to `data/filter1_passed.json.`
 
 ```bash
 python3 pipeline/00b_filter_price.py
 ```
+<img width="566" height="224" alt="image" src="https://github.com/user-attachments/assets/021b8abe-f6ea-4241-a2c0-b80208b78a0d" />
+
 
 **Step 00C:** Stream options chains from TastyTrade for output of `Step 00B`. Filter by expiration (15-45 days) and strike count (20+ strikes). Saves stocks with tradeable options to `data/filter2_passed.json.`
 
 ```bash
 python3 pipeline/00c_filter_options.py
 ```
+<img width="568" height="222" alt="image" src="https://github.com/user-attachments/assets/73a77f06-85cd-4281-b75c-92b96d558bd1" />
+
 
 **Step 00D:** Stream ATM option strikes from TastyTrade chains. Streams IV data for strikes. Filter by IV range 15-80%. Saves 66 stocks to `data/filter3_passed.json.`
 
 ```bash
 python3 pipeline/00d_filter_iv.py
 ```
+<img width="568" height="223" alt="image" src="https://github.com/user-attachments/assets/b6a68d8d-bde6-4e09-9e34-e7452ce578c7" />
+
 
 **Step 00E:** Load stocks from `Step 00D`.  Score by IV (40 pts), Strik Count (30 pts), expirations (20 pts), spread tightness (10 pts).  Rank by total score.  Select top 22 tickers.  Save to `data/stocks.py`
 
 ```bash
 python3 pipeline/00e_select_22.py
 ```
+<img width="570" height="284" alt="image" src="https://github.com/user-attachments/assets/471ae162-dd29-4327-a056-2c411870f10c" />
+
 
 **Step 00F:** Fetch 3 days of news linked to output from `Step 00E` from Finnhub.io.  Collect up to 10 artilces per stock with headlines.  Save article count and headlines `data/finnhub_news.json.`
 
 ```bash
 python3 pipeline/00f_get_news.py
 ```
+<img width="649" height="851" alt="image" src="https://github.com/user-attachments/assets/c504a233-6113-4815-8791-395433722c4a" />
 
 
 ## ⚙️ Build Credit Spreads
@@ -103,19 +114,24 @@ python3 pipeline/06_rank_spreads.py
 python3 pipeline/07_build_report.py
 ```
 
-**Step 8**
+**Step 8** Loads output from `Step 07`, `Step 01`, and `Step 0F`. For each trade, calculates buffer from strike, extracts 3 news headlines, and 3 headline summaries. Sends to GPT-4 with 5W1H analysis framework (Who/What/When/Where/Why/How). GPT assigns heat score 1-10 (risk from news/catalysts), analyzes catalyst timing, recommends Trade/Wait/Skip. Saves to `top9_analysis.json.`
 
 ```bash
+python3 pipeline/08_gpt_analysis.py
 ```
 
-**Step 9**
+**Step 9**  Loads output from `Step 08`. Uses regex to parse GPT's structured output. Extracts ticker, type, strikes, DTE, ROI, PoP, heat score (1-10), and recommendation (Trade/Wait/Skip) for each trade. Prints formatted table showing all 9 trades. Saves to CSV file with timestamp for Excel.
 
 ```bash
+python3 pipeline/09_format_trades.py
 ```
 
-**Step 10**
+## 🤖 Automate 
+
+**Step 10** Automate the pipeline
 
 ```bash
+python3 pipeline/10_run_pipeline.py
 ```
 
 
