@@ -79,20 +79,22 @@ python3 pipeline/02_get_chains.py
 python3 pipeline/03_check_liquidity.py
 ```
 
-**Step 04:** Loads outpput from `Step 2`. Extracts all call/put symbols with bids > 0. Streams Greeks (IV/delta/theta/gamma/vega) from TastyTrade in 300-symbol batches for 8 seconds each. Embeds Greeks into chain structure at exact strike locations. Saves to `data/chains_with_greeks.json.`
+**Step 04:** Loads outpput from `Step 02`. Extracts all call/put symbols with bids > 0. Streams Greeks (IV/delta/theta/gamma/vega) from TastyTrade in 300-symbol batches for 8 seconds each. Embeds Greeks into chain structure at exact strike locations. Saves to `data/chains_with_greeks.json.`
 
 ```bash
 python3 pipeline/04_get_greeks.py
 ```
 
-**Step 5**
+**Step 5** Loads output from `Step 4` (options with IV/delta/Greeks) and `Step 01`. For each ticker/expiration (7-45 DTE), pairs strikes into Bull Put and Bear Call spreads. Filters short delta 15-35% (OTM probability). Calculates credit (short bid - long ask), max loss, ROI. Uses Black-Scholes formula with strike-specific IV to calculate PoP. Filters ROI 5-50%, PoP ≥60%. Saves 9482 quality spreads to data/spreads.json.
 
 ```bash
+python3 pipeline/05_calculate_spreads.py
 ```
 
 **Step 6**
 
 ```bash
+python3 pipeline/06_rank_spreads.py
 ```
 
 **Step 7**
