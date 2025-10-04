@@ -15,9 +15,9 @@
 - Never miss high-volatility opportunities
 - Stop losing on shitty scanner data
 
-# 👨‍💻 Credit Spread Finder - PIPELINE
+# 🔎 Credit Spread Finder - PIPELINE
 
-## Build a Porftolio
+##  🛠 Build a Porftolio
 
 ### Step 00A: Download a CSV file from GitHub containing S&P 500 companies. Extract ticker symbols. Save 503 tickers to `data/sp500.json.` 
 
@@ -56,11 +56,33 @@ python3 pipeline/00f_get_news.py
 ```
 
 
-## Build Credit Spreads
+## ⚙️ Build Credit Spreads
 
 
 ### Step 01: Stream bid/ask quotes from TastyTrade for output from `Step 00E`. Save mid-price, spread, and timestamp to `data/stock_prices.json.`
 
+```bash
+python3 pipeline/01_get_stock_prices.py
+```
+
+
+### Step 02: Stream option chain from TastyTrade for output from `Step 01`. Filters 0-45 DTE, 70-130% strikes. Save expiration dates, strikes, call/put symbols, and bid/ask to `data/chains.json.`
+
+
+```bash
+python3 pipeline/02_get_chains.py
+```
+
+###
+
+```bash
+```
+
+```bash
+```
+
+```bash
+```
 
 
 
