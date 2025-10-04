@@ -13,7 +13,9 @@
 - Never miss high-volatility opportunities
 - Stop losing on shitty scanner data
 
-### How it works?
+# How it works:
+
+## Build a Porftolio
 
 ### Step 00A: Download a CSV file from GitHub containing S&P 500 companies. Extract ticker symbols. Save 503 tickers to `data/sp500.json.` 
 
@@ -40,10 +42,16 @@
 ```bash
 ```
 
-### Step 00F: Fetch 3 days of news linked to output from `Step 00E` from Finnhub.io.  Collect up to 10 artilces per stock with headlines.  Save article count and headlines.
+### Step 00F: Fetch 3 days of news linked to output from `Step 00E` from Finnhub.io.  Collect up to 10 artilces per stock with headlines.  Save article count and headlines `data/finnhub_news.json.`
 
 ```bash
 ```
+
+
+## Build Credit Spreads
+
+
+### Step 01: Stream bid/ask quotes from TastyTrade for output from `Step 00E`. Save mid-price, spread, and timestamp to `data/stock_prices.json.`
 
 
 
