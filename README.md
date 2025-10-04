@@ -113,18 +113,24 @@ python3 pipeline/06_rank_spreads.py
 ```bash
 python3 pipeline/07_build_report.py
 ```
+<img width="579" height="330" alt="image" src="https://github.com/user-attachments/assets/ef8928b3-2626-4e7f-84b6-e153fbcfb035" />
+
 
 **Step 8** Loads output from `Step 07`, `Step 01`, and `Step 0F`. For each trade, calculates buffer from strike, extracts 3 news headlines, and 3 headline summaries. Sends to GPT-4 with 5W1H analysis framework (Who/What/When/Where/Why/How). GPT assigns heat score 1-10 (risk from news/catalysts), analyzes catalyst timing, recommends Trade/Wait/Skip. Saves to `top9_analysis.json.`
 
 ```bash
 python3 pipeline/08_gpt_analysis.py
 ```
+<img width="738" height="959" alt="image" src="https://github.com/user-attachments/assets/daf72a25-7746-48fa-a1ea-f2e6d4cba457" />
+
 
 **Step 9**  Loads output from `Step 08`. Uses regex to parse GPT's structured output. Extracts ticker, type, strikes, DTE, ROI, PoP, heat score (1-10), and recommendation (Trade/Wait/Skip) for each trade. Prints formatted table showing all 9 trades. Saves to CSV file with timestamp for Excel.
 
 ```bash
 python3 pipeline/09_format_trades.py
 ```
+<img width="998" height="602" alt="image" src="https://github.com/user-attachments/assets/e39eaa48-7725-4443-93cb-01941329e74d" />
+
 
 ## 🤖 Automate 
 
