@@ -75,6 +75,8 @@ python3 pipeline/00f_get_news.py
 ```bash
 python3 pipeline/01_get_stock_prices.py
 ```
+<img width="567" height="569" alt="image" src="https://github.com/user-attachments/assets/a75dca0b-77f4-4197-bfcf-91bc818f5912" />
+
 
 
 **Step 02:** Stream option chain from TastyTrade for output from `Step 01`. Filters 0-45 DTE, 70-130% strikes. Save expiration dates, strikes, call/put symbols, and bid/ask to `data/chains.json.`
@@ -83,18 +85,24 @@ python3 pipeline/01_get_stock_prices.py
 ```bash
 python3 pipeline/02_get_chains.py
 ```
+<img width="570" height="521" alt="image" src="https://github.com/user-attachments/assets/43d670f4-4ca7-409c-843d-8170ceb23726" />
+
 
 **Step 03:** Loads output from `Step 02` (strikes). For each strike checks call/put, bid/ask. Filters by mid >= $0.30 and spread <10%. Saves liquid strikes per expiration to `data/liquid_chains.json.`
 
 ```bash
 python3 pipeline/03_check_liquidity.py
 ```
+<img width="568" height="1004" alt="image" src="https://github.com/user-attachments/assets/ae27addb-0b3f-42bb-ab5f-6b2628e89e40" />
+
 
 **Step 04:** Loads outpput from `Step 02`. Extracts all call/put symbols with bids > 0. Streams Greeks (IV/delta/theta/gamma/vega) from TastyTrade in 300-symbol batches for 8 seconds each. Embeds Greeks into chain structure at exact strike locations. Saves to `data/chains_with_greeks.json.`
 
 ```bash
 python3 pipeline/04_get_greeks.py
 ```
+<img width="571" height="539" alt="image" src="https://github.com/user-attachments/assets/332ae009-62c6-4613-b2df-8171016ebefc" />
+
 
 **Step 5** Loads output from `Step 4` and `Step 01`. For each ticker/expiration (7-45 DTE), pairs strikes into Bull Put and Bear Call spreads. Filters short delta 15-35% (OTM probability). Calculates credit (short bid - long ask), max loss, ROI. Uses Black-Scholes formula with strike-specific IV to calculate PoP. Filters ROI 5-50%, PoP ≥60%. Saves spreads to `data/spreads.json.`
 
