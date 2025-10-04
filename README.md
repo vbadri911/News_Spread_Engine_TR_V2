@@ -101,12 +101,16 @@ python3 pipeline/04_get_greeks.py
 ```bash
 python3 pipeline/05_calculate_spreads.py
 ```
+<img width="569" height="997" alt="image" src="https://github.com/user-attachments/assets/98eeafd1-f0cd-49f4-a433-b2879f1bda7e" />
+
 
 **Step 6** Loads output from `Step 5`. Calculates score = (ROI × PoP) / 100 for each spread. Sorts by score descending. Keeps ONLY the highest-scoring spread per ticker (22 total). Categorizes as ENTER (PoP ≥70% + ROI ≥20%), WATCH (PoP ≥60% + ROI ≥30%), or SKIP. Saves to `ranked_spreads.json.`
 
 ```bash
 python3 pipeline/06_rank_spreads.py
 ```
+<img width="562" height="510" alt="image" src="https://github.com/user-attachments/assets/91484ae5-8e1e-42e7-b735-6241aa5bf516" />
+
 
 **Step 7** Loads output from `Step 06`. Selects top 9 by rank. Adds sector mapping (XLK/XLF/XLV etc). Adds edge_reason from `Step 00E`. Formats into report table with rank, ticker, type, strikes, DTE, ROI, PoP, credit, max loss. Saves to `report_table.json.`
 
