@@ -19,7 +19,7 @@
 
 ## Build a Porftolio
 
-### **Step 00A:** Download a CSV file from GitHub containing S&P 500 companies. Extract ticker symbols. Save 503 tickers to `data/sp500.json.` 
+### Step 00A: Download a CSV file from GitHub containing S&P 500 companies. Extract ticker symbols. Save 503 tickers to `data/sp500.json.` 
 
 ```bash
 python3 pipeline/00a_get_sp500.py
