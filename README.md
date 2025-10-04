@@ -85,21 +85,22 @@ python3 pipeline/03_check_liquidity.py
 python3 pipeline/04_get_greeks.py
 ```
 
-**Step 5** Loads output from `Step 4` (options with IV/delta/Greeks) and `Step 01`. For each ticker/expiration (7-45 DTE), pairs strikes into Bull Put and Bear Call spreads. Filters short delta 15-35% (OTM probability). Calculates credit (short bid - long ask), max loss, ROI. Uses Black-Scholes formula with strike-specific IV to calculate PoP. Filters ROI 5-50%, PoP ≥60%. Saves 9482 quality spreads to data/spreads.json.
+**Step 5** Loads output from `Step 4` and `Step 01`. For each ticker/expiration (7-45 DTE), pairs strikes into Bull Put and Bear Call spreads. Filters short delta 15-35% (OTM probability). Calculates credit (short bid - long ask), max loss, ROI. Uses Black-Scholes formula with strike-specific IV to calculate PoP. Filters ROI 5-50%, PoP ≥60%. Saves spreads to `data/spreads.json.`
 
 ```bash
 python3 pipeline/05_calculate_spreads.py
 ```
 
-**Step 6**
+**Step 6** Loads output from `Step 5`. Calculates score = (ROI × PoP) / 100 for each spread. Sorts by score descending. Keeps ONLY the highest-scoring spread per ticker (22 total). Categorizes as ENTER (PoP ≥70% + ROI ≥20%), WATCH (PoP ≥60% + ROI ≥30%), or SKIP. Saves to `ranked_spreads.json.`
 
 ```bash
 python3 pipeline/06_rank_spreads.py
 ```
 
-**Step 7**
+**Step 7** Loads output from `Step 06`. Selects top 9 by rank. Adds sector mapping (XLK/XLF/XLV etc). Adds edge_reason from `Step 00E`. Formats into report table with rank, ticker, type, strikes, DTE, ROI, PoP, credit, max loss. Saves to `report_table.json.`
 
 ```bash
+python3 pipeline/07_build_report.py
 ```
 
 **Step 8**
