@@ -1,156 +1,178 @@
-# 📘 Credit Spread Finder - README
+# 📘 AI Credit Spread Finder - README
 
-**Purpose:** Find the 9 best options trades (credit spreads) from 500 stock tickers in minutes
+**Purpose:** Unearth the 9 best credit spread trades from 500+ S&P 500 tickers in minutes—backed by math and market smarts.
 
-**What to know:** Which exact trades to place today  
+**What to Know:** Pinpoint exact trades to place today with high-probability edges (70%+ PoP) and news-driven insights.
 
-**What to do:** Execute high-probability credit spreads  
+**What to Do:** Execute confident credit spreads with copy-paste TOS commands, guided by real-time visuals.
 
-**What to feel:** Confident because math backs every trade
+**What to Feel:** Empowered—because your trades are fueled by data, not guesswork or shaky scanner outputs.
 
+---
 
-### What's in it for me?
-- Save 3 hours of manual searching daily
-- Make money 70% of the time (mathematically proven)
-- Never miss high-volatility opportunities
-- Stop losing on shitty scanner data
+### 🚀 What’s in It for You?
 
-# 🔎 Credit Spread Finder - PIPELINE
+- **Save 3 Hours Daily:** Ditch manual hunting—let the pipeline do the heavy lifting.
+- **Win 70% of the Time:** Math-proven Probability of Profit (PoP) with a conservative twist.
+- **Seize Volatility:** Never miss high-IV opportunities with GPT-powered risk analysis.
+- **Outsmart Scanners:** Say goodbye to junk data—our heat scores and sector filters beat the competition.
 
-##  🛠 Build a Porftolio
+---
 
-**Step 00A:** Download a CSV file from GitHub containing S&P 500 companies. Extract ticker symbols. Save 503 tickers to `data/sp500.json.` 
+# 🔎 AI Credit Spread Finder - PIPELINE
 
-```bash
-python3 pipeline/00a_get_sp500.py
-```
-<img width="569" height="140" alt="image" src="https://github.com/user-attachments/assets/33d41e93-10e8-4d47-ad09-8ccfd6022801" />
+## 🛠 Build Your Portfolio
 
+This automated pipeline transforms raw market data into actionable trade ideas, ending with a dynamic dashboard to explore and execute.
 
-**Step 00B:** Stream live bid/ask quotes from TastyTrade for S&P500 stocks. Filter by price ($30-400) and spread (<2%). Saves liquid stocks to `data/filter1_passed.json.`
+### Step-by-Step Breakdown
 
-```bash
-python3 pipeline/00b_filter_price.py
-```
-<img width="566" height="224" alt="image" src="https://github.com/user-attachments/assets/021b8abe-f6ea-4241-a2c0-b80208b78a0d" />
+**Step 00A: Get S&P 500**
 
+- Download a CSV of S&P 500 companies from GitHub.
+- Extract 503 ticker symbols and save to `data/sp500.json`.
+- `python3 pipeline/00a_get_sp500.py`
 
-**Step 00C:** Stream options chains from TastyTrade for output of `Step 00B`. Filter by expiration (15-45 days) and strike count (20+ strikes). Saves stocks with tradeable options to `data/filter2_passed.json.`
+  ![S&P 500 Tickers](https://github.com/user-attachments/assets/33d41e93-10e8-4d47-ad09-8ccfd6022801)
 
-```bash
-python3 pipeline/00c_filter_options.py
-```
-<img width="568" height="222" alt="image" src="https://github.com/user-attachments/assets/73a77f06-85cd-4281-b75c-92b96d558bd1" />
+**Step 00B: Filter by Price**
 
+- Stream live bid/ask quotes from TastyTrade for S&P 500 stocks.
+- Filter by price ($30-400) and spread (&lt;2%).
+- Save liquid stocks to `data/filter1_passed.json`.
+- `python3 pipeline/00b_filter_price.py`
 
-**Step 00D:** Stream ATM option strikes from TastyTrade chains. Streams IV data for strikes. Filter by IV range 15-80%. Saves 66 stocks to `data/filter3_passed.json.`
+  ![Price Filter](https://github.com/user-attachments/assets/021b8abe-f6ea-4241-a2c0-b80208b78a0d)
 
-```bash
-python3 pipeline/00d_filter_iv.py
-```
-<img width="568" height="223" alt="image" src="https://github.com/user-attachments/assets/b6a68d8d-bde6-4e09-9e34-e7452ce578c7" />
+**Step 00C: Filter Options**
 
+- Stream options chains from TastyTrade for Step 00B output.
+- Filter by expiration (15-45 days) and strike count (20+ strikes).
+- Save tradeable options to `data/filter2_passed.json`.
+- `python3 pipeline/00c_filter_options.py`
 
-**Step 00E:** Load stocks from `Step 00D`.  Score by IV (40 pts), Strik Count (30 pts), expirations (20 pts), spread tightness (10 pts).  Rank by total score.  Select top 22 tickers.  Save to `data/stocks.py`
+  ![Options Filter](https://github.com/user-attachments/assets/021b8abe-f6ea-4241-a2c0-b80208b78a0d)*(Truncated image ref)*
 
-```bash
-python3 pipeline/00e_select_22.py
-```
-<img width="570" height="284" alt="image" src="https://github.com/user-attachments/assets/471ae162-dd29-4327-a056-2c411870f10c" />
+**Step 00D: Filter by IV**
 
+- Analyze implied volatility (IV) from options chains.
+- Filter for IV range (15-80%) to target high-opportunity stocks.
+- Save to `data/filter3_passed.json`.
+- `python3 pipeline/00d_filter_iv.py`
 
-**Step 00F:** Fetch 3 days of news linked to output from `Step 00E` from Finnhub.io.  Collect up to 10 artilces per stock with headlines.  Save article count and headlines `data/finnhub_news.json.`
+**Step 00E: Select Top 22**
 
-```bash
-python3 pipeline/00f_get_news.py
-```
-<img width="649" height="851" alt="image" src="https://github.com/user-attachments/assets/c504a233-6113-4815-8791-395433722c4a" />
+- Rank filtered stocks by liquidity and volatility.
+- Select top 22 for detailed analysis.
+- Save to `data/top22.json`.
+- `python3 pipeline/00e_select_22.py`
 
+**Step 00F: Get News**
 
-## ⚙️ Build Credit Spreads
+- Fetch latest news headlines for top 22 stocks via API.
+- Save to `data/news.json`.
+- `python3 pipeline/00f_get_news.py`
 
+**Step 00G: GPT Sentiment Filter**
 
-**Step 01:** Stream bid/ask quotes from TastyTrade for output from `Step 00E`. Save mid-price, spread, and timestamp to `data/stock_prices.json.`
+- Analyze news with GPT-4 using 5W1H (Who/What/When/Where/Why/How).
+- Filter stocks with positive/volatile sentiment.
+- Save to `data/sentiment_filtered.json`.
+- `python3 pipeline/00g_gpt_sentiment_filter.py`
 
-```bash
-python3 pipeline/01_get_stock_prices.py
-```
-<img width="567" height="569" alt="image" src="https://github.com/user-attachments/assets/a75dca0b-77f4-4197-bfcf-91bc818f5912" />
+**Step 01: Get Prices**
 
+- Fetch real-time stock prices for filtered stocks.
+- Save to `data/prices.json`.
+- `python3 pipeline/01_get_prices.py`
 
+**Step 02: Get Chains**
 
-**Step 02:** Stream option chain from TastyTrade for output from `Step 01`. Filters 0-45 DTE, 70-130% strikes. Save expiration dates, strikes, call/put symbols, and bid/ask to `data/chains.json.`
+- Pull full options chains from TastyTrade for top stocks.
+- Save to `data/chains.json`.
+- `python3 pipeline/02_get_chains.py`
 
+**Step 03: Check Liquidity**
 
-```bash
-python3 pipeline/02_get_chains.py
-```
-<img width="570" height="521" alt="image" src="https://github.com/user-attachments/assets/43d670f4-4ca7-409c-843d-8170ceb23726" />
+- Filter chains for options with sufficient volume/open interest.
+- Save to `data/liquid_chains.json`.
+- `python3 pipeline/03_check_liquidity.py`
 
+**Step 04: Get Greeks**
 
-**Step 03:** Loads output from `Step 02` (strikes). For each strike checks call/put, bid/ask. Filters by mid >= $0.30 and spread <10%. Saves liquid strikes per expiration to `data/liquid_chains.json.`
+- Calculate option Greeks (Delta, IV, Theta) for liquid chains.
+- Save to `data/chains_with_greeks.json`.
+- `python3 pipeline/04_get_greeks.py`
 
-```bash
-python3 pipeline/03_check_liquidity.py
-```
-<img width="568" height="1004" alt="image" src="https://github.com/user-attachments/assets/ae27addb-0b3f-42bb-ab5f-6b2628e89e40" />
+**Step 05: Calculate Spreads**
 
+- Use Black-Scholes with dynamic risk-free rate (r) to compute credit spreads.
+- Filter for 15-45 DTE, 20-40% width, conservative PoP.
+- Save to `data/spreads.json`.
+- `python3 pipeline/05_calculate_spreads.py`
 
-**Step 04:** Loads outpput from `Step 02`. Extracts all call/put symbols with bids > 0. Streams Greeks (IV/delta/theta/gamma/vega) from TastyTrade in 300-symbol batches for 8 seconds each. Embeds Greeks into chain structure at exact strike locations. Saves to `data/chains_with_greeks.json.`
+**Step 06: Rank Spreads**
 
-```bash
-python3 pipeline/04_get_greeks.py
-```
-<img width="571" height="539" alt="image" src="https://github.com/user-attachments/assets/332ae009-62c6-4613-b2df-8171016ebefc" />
+- Rank spreads by PoP, ROI, and liquidity.
+- Save ranked data to `data/ranked_spreads.json`.
+- `python3 pipeline/06_rank_spreads.py`
 
+**Step 07: Build Report**
 
-**Step 5** Loads output from `Step 4` and `Step 01`. For each ticker/expiration (7-45 DTE), pairs strikes into Bull Put and Bear Call spreads. Filters short delta 15-35% (OTM probability). Calculates credit (short bid - long ask), max loss, ROI. Uses Black-Scholes formula with strike-specific IV to calculate PoP. Filters ROI 5-50%, PoP ≥60%. Saves spreads to `data/spreads.json.`
+- Load ranked spreads, add sector mapping (XLK/XLF/XLV), edge reasons.
+- Format into a report table (rank, ticker, type, strikes, DTE, ROI, PoP, credit, max loss).
+- Save to `data/report_table.json`.
+- `python3 pipeline/07_build_report.py`
 
-```bash
-python3 pipeline/05_calculate_spreads.py
-```
-<img width="569" height="997" alt="image" src="https://github.com/user-attachments/assets/98eeafd1-f0cd-49f4-a433-b2879f1bda7e" />
+  ![Report Table](https://github.com/user-attachments/assets/ef8928b3-2626-4e7f-84b6-e153fbcfb035)
 
+**Step 08: GPT Analysis**
 
-**Step 6** Loads output from `Step 5`. Calculates score = (ROI × PoP) / 100 for each spread. Sorts by score descending. Keeps ONLY the highest-scoring spread per ticker (22 total). Categorizes as ENTER (PoP ≥70% + ROI ≥20%), WATCH (PoP ≥60% + ROI ≥30%), or SKIP. Saves to `ranked_spreads.json.`
+- Analyze top spreads with GPT-4 using 5W1H framework.
+- Extract buffer, news headlines/summaries, heat score (1-10), and Trade/Wait/Skip recs.
+- Save to `top9_analysis.json`.
+- `python3 pipeline/08_gpt_analysis.py`
 
-```bash
-python3 pipeline/06_rank_spreads.py
-```
-<img width="562" height="510" alt="image" src="https://github.com/user-attachments/assets/91484ae5-8e1e-42e7-b735-6241aa5bf516" />
+  ![GPT Analysis](https://github.com/user-attachments/assets/daf72a25-7746-48fa-a1ea-f2e6d4cba457)
 
+**Step 09: Format Trades**
 
-**Step 7** Loads output from `Step 06`. Selects top 9 by rank. Adds sector mapping (XLK/XLF/XLV etc). Adds edge_reason from `Step 00E`. Formats into report table with rank, ticker, type, strikes, DTE, ROI, PoP, credit, max loss. Saves to `report_table.json.`
+- Parse GPT output with regex for ticker, type, strikes, DTE, ROI, PoP, heat, recs.
+- Print formatted table of top 9 trades.
+- Save to timestamped CSV (e.g., `reports/top9_trades_20251017_0657.csv`).
+- `python3 pipeline/09_format_trades.py`
 
-```bash
-python3 pipeline/07_build_report.py
-```
-<img width="579" height="330" alt="image" src="https://github.com/user-attachments/assets/ef8928b3-2626-4e7f-84b6-e153fbcfb035" />
+  ![Formatted Trades](https://github.com/user-attachments/assets/e39eaa48-7725-4443-93cb-01941329e74d)
 
+## 🤖 Automate the Pipeline
 
-**Step 8** Loads output from `Step 07`, `Step 01`, and `Step 0F`. For each trade, calculates buffer from strike, extracts 3 news headlines, and 3 headline summaries. Sends to GPT-4 with 5W1H analysis framework (Who/What/When/Where/Why/How). GPT assigns heat score 1-10 (risk from news/catalysts), analyzes catalyst timing, recommends Trade/Wait/Skip. Saves to `top9_analysis.json.`
+**Step 10: Run Full Pipeline**
 
-```bash
-python3 pipeline/08_gpt_analysis.py
-```
-<img width="738" height="959" alt="image" src="https://github.com/user-attachments/assets/daf72a25-7746-48fa-a1ea-f2e6d4cba457" />
+- Automate all steps (00A-09) with a single command.
+- Outputs JSONs, CSVs, and prepares data for visualization.
+- `python3 run_full_pipeline.py`
 
+## 🎨 Visualize Your Trades
 
-**Step 9**  Loads output from `Step 08`. Uses regex to parse GPT's structured output. Extracts ticker, type, strikes, DTE, ROI, PoP, heat score (1-10), and recommendation (Trade/Wait/Skip) for each trade. Prints formatted table showing all 9 trades. Saves to CSV file with timestamp for Excel.
+**Step 11: Launch Trade Command Center**
 
-```bash
-python3 pipeline/09_format_trades.py
-```
-<img width="998" height="602" alt="image" src="https://github.com/user-attachments/assets/e39eaa48-7725-4443-93cb-01941329e74d" />
+- **New Feature!** Explore your top 9 trades interactively with the **Trade Command Center** dashboard.
+- **What You Get:**
+  - **Top 9 Table:** Sortable, filterable list with copy-to-clipboard TOS commands (e.g., `SELL -1 VERTICAL NVDA 100 (Weeklys) 24 OCT 25 187.5/190 CALL @0.74 LMT`).
+  - **PoP Distribution:** Histogram showing safety (70%+ PoP) by trade type (Bull Put vs Bear Call).
+  - **ROI vs PoP Map:** Scatter plot with heat (risk) and sector insights—hover for details.
+  - **Filters:** Tweak by sector (XLK, XLV), DTE (7-45), and PoP (60-100%) to refine trades.
+- **How to Use:**
+  1. Run the pipeline: `python3 run_full_pipeline.py`
+  2. Launch the dashboard: `streamlit run utils/viz.py`
+  3. Browse at `http://localhost:8501`, copy TOS commands, and trade with confidence!
+- **Why It Rocks:** Real-time insights beat static PNGs—interact, filter, and copy trades in seconds.
 
+## 🌟 Next-Level Trading
 
-## 🤖 Automate 
+- **Coming Soon:** Real-time price updates, AI trade recommendations, and multi-user dashboards.
+- **Get Involved:** Share feedback via `data/feedback.json` in the dashboard—shape the future!
 
-**Step 10** Automate the pipeline
+**Note:** Requires Python 3.12, TastyTrade API key, and packages (install via `pip install streamlit streamlit-aggrid pyperclip plotly pandas kaleido`).
 
-```bash
-python3 pipeline/10_run_pipeline.py
-```
-
-
-
+Happy Trading! 📈

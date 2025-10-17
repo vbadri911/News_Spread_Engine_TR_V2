@@ -1,0 +1,10 @@
+Rank,Ticker,Type,Strikes,DTE,ROI,PoP,Heat,Catalyst,Recommendation
+1,NVDA,Bear Call,$188/$190,7,42.0%,83.1%,6,"Nvidia's update on its data center business after Nov. 19","Trade - The upcoming business update is expected to boost the stock price."
+2,AMD,Bear Call,$245/$248,7,31.6%,80.0%,5,"Market reaction to the strategic partnership with OpenAI","Trade - The strategic partnership with OpenAI is expected to boost the stock price."
+3,AVGO,Bear Call,$380/$390,28,31.6%,76.7%,5,"Market reaction to the reaffirmed outperform rating","Trade - The reaffirmed outperform rating is expected to boost the stock price."
+4,GOOGL,Bear Call,$265/$270,14,31.6%,76.0%,5,"Market reaction to the funding to Reflection AI","Trade - The funding to Reflection AI is expected to boost the stock price."
+5,UNH,Bear Call,$365/$370,7,27.6%,84.1%,4,"Market reaction to the recent fall in stock price","Wait - The recent fall in stock price may continue to impact the stock negatively."
+6,ORCL,Bear Call,$340/$350,35,29.0%,78.4%,4,"Market reaction to the regional bank fears","Wait - The regional bank fears may continue to impact the stock negatively."
+7,LEN,Bear Call,$126/$130,7,31.1%,70.7%,4,"Market reaction to the predicted slowdown in U.S. homebuilding","Wait - The predicted slowdown in U.S. homebuilding may impact the stock negatively."
+8,MMM,Bear Call,$160/$165,35,30.5%,71.6%,3,"Market reaction to the recognition by Fast Company","Trade - The recognition by Fast Company is expected to boost the stock price."
+9,DELL,Bear Call,$158/$160,7,25.0%,83.8%,4,"Market reaction to the raised long-term revenue and earnings guidance","Trade - The raised long-term revenue and earnings guidance is expected to boost the stock price."

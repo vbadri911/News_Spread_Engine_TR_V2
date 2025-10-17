@@ -1,3 +1,4 @@
+
 """
 Build Report Table: Top 9 spreads for GPT analysis
 """
@@ -36,12 +37,19 @@ def build_report_table():
     for spread in spreads:
         ticker = spread["ticker"]
         
+        # Handle strike formatting correctly (preserve .5 if present)
+        short_strike = spread["short_strike"]
+        long_strike = spread["long_strike"]
+        short_str = f"{short_strike:.1f}" if short_strike % 1 != 0 else f"{int(short_strike)}"
+        long_str = f"{long_strike:.1f}" if long_strike % 1 != 0 else f"{int(long_strike)}"
+        legs = f"${short_str}/${long_str}"
+        
         entry = {
             "rank": spread["rank"],
             "sector": sector_map.get(ticker, "Unknown"),
             "ticker": ticker,
             "type": spread["type"],
-            "legs": f"${spread['short_strike']:.0f}/${spread['long_strike']:.0f}",
+            "legs": legs,
             "exp_date": spread["expiration"]["date"],
             "dte": spread["expiration"]["dte"],
             "roi": f"{spread['roi']}%",

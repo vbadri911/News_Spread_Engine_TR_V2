@@ -1,0 +1,10 @@
+Rank,Ticker,Type,Strikes,DTE,ROI,PoP,Heat,Catalyst,Recommendation,TOS Command
+1,NVDA,Bear Call,$187.5/$190,7,42.0%,83.1%,5,"Nvidia's data center business update on Nov. 19","Wait - The upcoming business update could significantly impact the stock price.","SELL -1 VERTICAL NVDA 100 (Weeklys) 31 OCT 25 187.5/190 CALL @2.45 LMT"
+2,AMD,Bear Call,$245/$247.5,7,31.6%,80.0%,4,"No specific upcoming events within DTE","Trade - The stock has a high PoP and no known catalyst risks.","SELL -1 VERTICAL AMD 100 (Weeklys) 31 OCT 25 245/247.5 CALL @2.45 LMT"
+3,AVGO,Bear Call,$380/$390,28,31.6%,76.7%,6,"No specific upcoming events within DTE","Trade - The stock has a high PoP and no known catalyst risks.","SELL -1 VERTICAL AVGO 100 (Weeklys) 31 OCT 25 380/390 CALL @2.45 LMT"
+4,GOOGL,Bear Call,$265/$270,14,31.6%,76.0%,4,"No specific upcoming events within DTE","Trade - The stock has a high PoP and no known catalyst risks.","SELL -1 VERTICAL GOOGL 100 (Weeklys) 31 OCT 25 265/270 CALL @2.45 LMT"
+5,UNH,Bear Call,$365/$370,7,27.6%,84.1%,5,"No specific upcoming events within DTE","Trade - Despite recent fall; the stock has a high PoP and no known catalyst risks.","SELL -1 VERTICAL UNH 100 (Weeklys) 31 OCT 25 365/370 CALL @2.45 LMT"
+6,ORCL,Bear Call,$340/$350,35,29.0%,78.4%,6,"No specific upcoming events within DTE","Trade - The stock has a high PoP and no known catalyst risks.","SELL -1 VERTICAL ORCL 100 (Weeklys) 31 OCT 25 340/350 CALL @2.45 LMT"
+7,LEN,Bear Call,$126/$130,7,31.1%,70.7%,7,"No specific upcoming events within DTE","Trade - Despite potential industry slowdown; the stock has a decent PoP and no known catalyst risks.","SELL -1 VERTICAL LEN 100 (Weeklys) 31 OCT 25 126/130 CALL @2.45 LMT"
+8,MMM,Bear Call,$160/$165,35,30.5%,71.6%,4,"No specific upcoming events within DTE","Trade - The stock has a decent PoP and no known catalyst risks.","SELL -1 VERTICAL MMM 100 (Weeklys) 31 OCT 25 160/165 CALL @2.45 LMT"
+9,DELL,Bear Call,$157.5/$160,7,25.0%,83.8%,6,"No specific upcoming events within DTE","Trade - The stock has a high PoP and no known catalyst risks.","SELL -1 VERTICAL DELL 100 (Weeklys) 31 OCT 25 157.5/160 CALL @2.45 LMT"
