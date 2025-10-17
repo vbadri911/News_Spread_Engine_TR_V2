@@ -1,0 +1,1488 @@
+============================================================
+STEP 0A: Get S&P 500
+============================================================
+Got 503 tickers
+Step 0A complete
+============================================================
+STEP 0B: Filter Price
+============================================================
+Input: 503 stocks
+
+Results:
+  Passed: 162
+  Failed: 341
+
+Criteria: $30-400, spread <2%
+Step 0B complete
+============================================================
+STEP 0C: Filter Options
+============================================================
+Input: 162 stocks
+
+Results:
+  Passed: 162
+  Failed: 0
+
+Criteria: 20+ strikes, 15-45 DTE
+Step 0C complete
+============================================================
+STEP 0D: Filter IV
+============================================================
+Input: 162 stocks
+
+Results:
+  Passed: 155
+  Failed: 7
+
+Criteria: IV 15-80%
+Step 0D complete
+============================================================
+STEP 0E: Select 22 Stocks
+============================================================
+Input: 155 stocks
+
+Selected 22 stocks
+
+Top 5:
+  1. NVDA: IV=47.9%, Score=100
+  2. ALB: IV=71.9%, Score=90
+  3. AMD: IV=71.5%, Score=90
+  4. APO: IV=60.1%, Score=90
+  5. BIIB: IV=50.6%, Score=90
+
+Step 0E complete
+============================================================
+STEP 1B: Get Finnhub News (VERBOSE)
+============================================================
+
+📰 Fetching news for 22 stocks
+📅 Date range: 2025-10-14 to 2025-10-17
+
+[1/22] NVDA... ✅ 185 articles
+      → Prediction: Nvidia Stock Is Going to Soar After Nov. 19...
+[2/22] ALB... ✅ 11 articles
+      → Wells Fargo Maintains Albemarle (ALB) Equal-Weight Recommendation...
+[3/22] AMD... ✅ 117 articles
+      → 3 Market-Beating Stocks with Impressive Fundamentals...
+[4/22] APO... ✅ 20 articles
+      → Apollo and John Malone Back Fintech Helping Telcos Offload Phone Loan Exposure...
+[5/22] BIIB... ✅ 6 articles
+      → Looking at the Changing Narrative for Biogen After Recent Pipeline and Market De...
+[6/22] AVGO... ✅ 95 articles
+      → Bernstein Reaffirms Outperform Rating on Broadcom (AVGO), Keeps $400 PT...
+[7/22] COIN... ✅ 54 articles
+      → Trump Family Reportedly $1 Billion In Profit From Crypto Ventures...
+[8/22] CEG... ✅ 13 articles
+      → A Once-in-a-Decade Investment Opportunity: 1 Vanguard Index Fund to Buy for the ...
+[9/22] DDOG... ✅ 8 articles
+      → Why GitLab Stock Suddenly Rocketed Higher in Late Action Today...
+[10/22] DELL... ✅ 25 articles
+      → How Dell’s Expanded AI Partnerships and Guidance Shift Will Impact Dell Technolo...
+[11/22] FI... ✅ 7 articles
+      → Is Fiserv (FI) Among the Top Stocks to Buy According to Bridgewater Associates?...
+[12/22] LEN... ✅ 7 articles
+      → U.S. Homebuilding Set For 2025 Slowdown As Affordability Bites...
+[13/22] MU... ✅ 38 articles
+      → Trending tickers: Praxis, Western Alliance, Rigetti, Micron and Smiths...
+[14/22] ORCL... ✅ 102 articles
+      → Generative AI Digest: Massive Funding Haul For Top AI Players...
+[15/22] RCL... ✅ 6 articles
+      → Richard Fain Captained Royal Caribbean To Become Cruise Giant...
+[16/22] STX... ✅ 10 articles
+      → How Investors Are Reacting To Seagate Technology Holdings (STX) Amid Analyst Upg...
+[17/22] UNH... ✅ 17 articles
+      → UnitedHealth Group (UNH) Registers a Bigger Fall Than the Market: Important Fact...
+[18/22] WDC... ✅ 10 articles
+      → Can Western Digital’s (WDC) New AI Lab Transform Its Competitive Edge in Storage...
+[19/22] MMM... ✅ 8 articles
+      → 13-Year-Old From California Named America’s Top Young Scientist for Inventing In...
+[20/22] ADBE... ✅ 14 articles
+      → Generative AI Digest: Massive Funding Haul For Top AI Players...
+[21/22] ABNB... ✅ 14 articles
+      → Airbnb: Q3 2025 Performance May Disappoint As Growth Normalizes...
+[22/22] GOOGL... ✅ 139 articles
+      → 2 Cash-Heavy Stocks Worth Investigating and 1 We Avoid...
+
+✅ News collection complete!
+   Total stocks: 22
+   With news: 22
+   Total articles: 906
+============================================================
+STEP 01: Get Real Stock Prices
+============================================================
+💰 Getting real stock prices from Tradier...
+   Processing batch 1: 22 stocks
+   ✅ NVDA: $177.46 (bid: $177.42, ask: $177.50)
+   ✅ ALB: $90.50 (bid: $90.10, ask: $90.90)
+   ✅ AMD: $228.25 (bid: $228.10, ask: $228.40)
+   ✅ APO: $117.90 (bid: $116.80, ask: $119.00)
+   ✅ BIIB: $141.73 (bid: $140.71, ask: $142.75)
+   ✅ AVGO: $346.00 (bid: $345.18, ask: $346.82)
+   ✅ COIN: $317.34 (bid: $317.03, ask: $317.65)
+   ✅ CEG: $386.50 (bid: $385.00, ask: $388.00)
+   ✅ DDOG: $148.72 (bid: $148.46, ask: $148.97)
+   ✅ DELL: $147.00 (bid: $146.00, ask: $147.99)
+   ✅ FI: $116.71 (bid: $116.62, ask: $116.80)
+   ✅ LEN: $122.05 (bid: $121.20, ask: $122.90)
+   ✅ MU: $195.89 (bid: $195.60, ask: $196.19)
+   ✅ ORCL: $301.49 (bid: $301.10, ask: $301.87)
+   ✅ RCL: $294.11 (bid: $293.21, ask: $295.00)
+   ✅ STX: $219.00 (bid: $218.00, ask: $220.00)
+   ✅ UNH: $348.37 (bid: $347.83, ask: $348.90)
+   ✅ WDC: $121.59 (bid: $121.18, ask: $122.00)
+   ✅ MMM: $149.84 (bid: $149.48, ask: $150.21)
+   ✅ ADBE: $326.38 (bid: $325.27, ask: $327.49)
+   ✅ ABNB: $120.93 (bid: $120.70, ask: $121.15)
+   ✅ GOOGL: $247.43 (bid: $247.29, ask: $247.56)
+
+📊 Results:
+   Success: 22/22 (100.0%)
+   Failed: 0
+✅ Step 01 complete: stock_prices.json created
+============================================================
+STEP 02: Get Options Chains
+============================================================
+
+📊 Collecting chains with symbols...
+   ✅ BIIB: 7 expirations
+   ✅ ALB: 7 expirations
+   ✅ APO: 7 expirations
+   ✅ DDOG: 7 expirations
+   ✅ NVDA: 7 expirations
+   ✅ DELL: 7 expirations
+   ✅ AVGO: 7 expirations
+   ✅ CEG: 7 expirations
+   ✅ AMD: 7 expirations
+   ✅ COIN: 7 expirations
+   ✅ FI: 7 expirations
+   ✅ LEN: 7 expirations
+   ✅ MU: 7 expirations
+   ✅ STX: 7 expirations
+   ✅ RCL: 7 expirations
+   ✅ MMM: 7 expirations
+   ✅ ORCL: 7 expirations
+   ✅ UNH: 7 expirations
+   ✅ WDC: 7 expirations
+   ✅ ADBE: 7 expirations
+   ✅ ABNB: 7 expirations
+   ✅ GOOGL: 7 expirations
+
+============================================================
+✅ Chains complete: 22/22 stocks
+   Expirations: 154
+   Strikes: 9742 (with symbols)
+============================================================
+STEP 03: Check Liquidity
+============================================================
+💧 Checking liquidity for ALL expirations...
+
+BIIB: Checking liquidity...
+   ✅ 7 expirations with 79 liquid strikes
+
+ALB: Checking liquidity...
+   ✅ 7 expirations with 128 liquid strikes
+
+APO: Checking liquidity...
+   ✅ 7 expirations with 101 liquid strikes
+
+DDOG: Checking liquidity...
+   ✅ 7 expirations with 227 liquid strikes
+
+NVDA: Checking liquidity...
+   ✅ 7 expirations with 465 liquid strikes
+
+DELL: Checking liquidity...
+   ✅ 7 expirations with 266 liquid strikes
+
+AVGO: Checking liquidity...
+   ✅ 7 expirations with 539 liquid strikes
+
+CEG: Checking liquidity...
+   ✅ 7 expirations with 546 liquid strikes
+
+AMD: Checking liquidity...
+   ✅ 7 expirations with 611 liquid strikes
+
+COIN: Checking liquidity...
+   ✅ 7 expirations with 692 liquid strikes
+
+FI: Checking liquidity...
+   ✅ 7 expirations with 134 liquid strikes
+
+LEN: Checking liquidity...
+   ✅ 7 expirations with 97 liquid strikes
+
+MU: Checking liquidity...
+   ✅ 7 expirations with 443 liquid strikes
+
+STX: Checking liquidity...
+   ✅ 7 expirations with 310 liquid strikes
+
+RCL: Checking liquidity...
+   ✅ 7 expirations with 351 liquid strikes
+
+MMM: Checking liquidity...
+   ✅ 7 expirations with 170 liquid strikes
+
+ORCL: Checking liquidity...
+   ✅ 7 expirations with 503 liquid strikes
+
+UNH: Checking liquidity...
+   ✅ 7 expirations with 345 liquid strikes
+
+WDC: Checking liquidity...
+   ✅ 7 expirations with 250 liquid strikes
+
+ADBE: Checking liquidity...
+   ✅ 7 expirations with 305 liquid strikes
+
+ABNB: Checking liquidity...
+   ✅ 7 expirations with 132 liquid strikes
+
+GOOGL: Checking liquidity...
+   ✅ 7 expirations with 376 liquid strikes
+
+✅ Liquidity check complete
+   Tickers with liquid options: 22
+   Total liquid options: 7070
+============================================================
+STEP 04: Get Greeks
+============================================================
+
+🧮 Collecting Greeks for exact chain strikes...
+📊 Need Greeks for 15916 options
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 16 Greeks (80.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 11 Greeks (55.0%)
+      ✅ 16 Greeks (80.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 12 Greeks (60.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 17 Greeks (85.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 16 Greeks (80.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 17 Greeks (85.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 17 Greeks (85.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 15 Greeks (75.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 16 Greeks (80.0%)
+      ✅ 17 Greeks (85.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 15 Greeks (75.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 17 Greeks (85.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 13 Greeks (65.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 7 Greeks (35.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 12 Greeks (60.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 13 Greeks (65.0%)
+      ✅ 10 Greeks (50.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 17 Greeks (85.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 12 Greeks (60.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 12 Greeks (60.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 13 Greeks (65.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 15 Greeks (75.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 17 Greeks (85.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 9 Greeks (45.0%)
+      ✅ 18 Greeks (90.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 8 Greeks (40.0%)
+      ✅ 12 Greeks (60.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 19 Greeks (95.0%)
+      ✅ 14 Greeks (70.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 20 Greeks (100.0%)
+      ✅ 16 Greeks (80.0%)
+
+============================================================
+✅ Greeks collected and connected: 15714/15916
+   Coverage: 98.7%
+   Saved to: chains_with_greeks.json
+============================================================
+STEP 5: Calculate Spreads (Black-Scholes)
+============================================================
+
+📊 Building spreads with Black-Scholes PoP...
+
+BIIB: $141.73
+   ✅ 2 quality spreads
+
+ALB: $90.50
+   ✅ 243 quality spreads
+
+APO: $117.90
+   ✅ 34 quality spreads
+
+DDOG: $148.72
+   ✅ 133 quality spreads
+
+NVDA: $177.46
+   ✅ 431 quality spreads
+
+DELL: $147.00
+   ✅ 429 quality spreads
+
+AVGO: $346.00
+   ✅ 1387 quality spreads
+
+CEG: $386.50
+   ✅ 614 quality spreads
+
+AMD: $228.25
+   ✅ 1298 quality spreads
+
+COIN: $317.34
+   ✅ 1949 quality spreads
+
+FI: $116.71
+   ✅ 71 quality spreads
+
+LEN: $122.05
+   ✅ 131 quality spreads
+
+MU: $195.89
+   ✅ 848 quality spreads
+
+STX: $219.00
+   ✅ 215 quality spreads
+
+RCL: $294.11
+   ✅ 257 quality spreads
+
+MMM: $149.84
+   ✅ 124 quality spreads
+
+ORCL: $301.49
+   ✅ 1023 quality spreads
+
+UNH: $348.37
+   ✅ 591 quality spreads
+
+WDC: $121.59
+   ✅ 94 quality spreads
+
+ADBE: $326.38
+   ✅ 460 quality spreads
+
+ABNB: $120.93
+   ✅ 291 quality spreads
+
+GOOGL: $247.43
+   ✅ 653 quality spreads
+
+✅ Total spreads: 11278
+   Bull Puts: 5296
+   Bear Calls: 5982
+============================================================
+STEP 6: Rank Spreads (1 per ticker)
+============================================================
+
+🏆 Ranking 11278 spreads...
+
+📊 Results (1 per ticker):
+   🟢 ENTER: 15
+   🟡 WATCH: 1
+   🔴 SKIP: 6
+
+🎯 Top 9 Spreads:
+   #1: NVDA Bear Call $188/$190
+        Score: 34.9 | ROI: 42.0% | PoP: 83.1%
+   #2: AMD Bear Call $245/$248
+        Score: 25.3 | ROI: 31.6% | PoP: 80.0%
+   #3: AVGO Bear Call $380/$390
+        Score: 24.2 | ROI: 31.6% | PoP: 76.7%
+   #4: GOOGL Bear Call $265/$270
+        Score: 24.0 | ROI: 31.6% | PoP: 76.0%
+   #5: UNH Bear Call $365/$370
+        Score: 23.2 | ROI: 27.6% | PoP: 84.1%
+   #6: ORCL Bear Call $340/$350
+        Score: 22.7 | ROI: 29.0% | PoP: 78.4%
+   #7: LEN Bear Call $126/$130
+        Score: 22.0 | ROI: 31.1% | PoP: 70.7%
+   #8: MMM Bear Call $160/$165
+        Score: 21.8 | ROI: 30.5% | PoP: 71.6%
+   #9: DELL Bear Call $158/$160
+        Score: 20.9 | ROI: 25.0% | PoP: 83.8%
+
+✅ Step 6 complete: ranked_spreads.json
+============================================================
+STEP 7: Build Report (Top 9)
+============================================================
+
+Report: 9 trades
+
+Rank  Ticker   Type         ROI      PoP     
+---------------------------------------------
+1     NVDA     Bear Call    42.0%    83.1%   
+2     AMD      Bear Call    31.6%    80.0%   
+3     AVGO     Bear Call    31.6%    76.7%   
+4     GOOGL    Bear Call    31.6%    76.0%   
+5     UNH      Bear Call    27.6%    84.1%   
+6     ORCL     Bear Call    29.0%    78.4%   
+7     LEN      Bear Call    31.1%    70.7%   
+8     MMM      Bear Call    30.5%    71.6%   
+9     DELL     Bear Call    25.0%    83.8%   
+
+✅ Step 7 complete: report_table.json
+============================================================
+STEP 8: GPT News Analysis
+============================================================
+
+📊 Loading data...
+   ✓ 9 trades
+   ✓ 9/9 tickers with news
+   Tickers: NVDA, AMD, AVGO, GOOGL, UNH, ORCL, LEN, MMM, DELL
+
+🤖 Calling GPT for 5W1H analysis...
+✅ Analysis complete
+
+============================================================
+GPT ANALYSIS:
+============================================================
+#1. NVDA Bear Call $188/$190
+   DTE: 7 | ROI: 42.0% | PoP: 83.1% | HEAT: 6
+   
+   5W1H ANALYSIS:
+   • WHO: Nvidia
+   • WHAT: Upcoming update on booming data center business
+   • WHEN: After Nov. 19
+   • WHERE: Global market
+   • WHY: The rush to secure AI data center capacity
+   • HOW: Positive impact on price expected
+   
+   CATALYST RISK:
+   Nvidia's update on its data center business after Nov. 19
+   
+   RECOMMENDATION:
+   Trade - The upcoming business update is expected to boost the stock price.
+
+#2. AMD Bear Call $245/$248
+   DTE: 7 | ROI: 31.6% | PoP: 80.0% | HEAT: 5
+   
+   5W1H ANALYSIS:
+   • WHO: Advanced Micro Devices (AMD)
+   • WHAT: Strategic partnership with OpenAI to deploy 6 Gigawatts of AMD GPUs
+   • WHEN: Announced on October 6
+   • WHERE: Global market
+   • WHY: To power OpenAI’s next-generation AI Infrastructure
+   • HOW: Positive impact on price expected
+   
+   CATALYST RISK:
+   Market reaction to the strategic partnership with OpenAI
+   
+   RECOMMENDATION:
+   Trade - The strategic partnership with OpenAI is expected to boost the stock price.
+
+#3. AVGO Bear Call $380/$390
+   DTE: 28 | ROI: 31.6% | PoP: 76.7% | HEAT: 5
+   
+   5W1H ANALYSIS:
+   • WHO: Broadcom Inc. (AVGO)
+   • WHAT: Outperform rating reaffirmed by Bernstein SocGen Group
+   • WHEN: On October 8
+   • WHERE: Global market
+   • WHY: Confidence in the company’s future growth path
+   • HOW: Positive impact on price expected
+   
+   CATALYST RISK:
+   Market reaction to the reaffirmed outperform rating
+   
+   RECOMMENDATION:
+   Trade - The reaffirmed outperform rating is expected to boost the stock price.
+
+#4. GOOGL Bear Call $265/$270
+   DTE: 14 | ROI: 31.6% | PoP: 76.0% | HEAT: 5
+   
+   5W1H ANALYSIS:
+   • WHO: Google (GOOGL)
+   • WHAT: Funding to Reflection AI for building frontier-scale open intelligence systems
+   • WHEN: Announced on Oct. 9
+   • WHERE: Global market
+   • WHY: To rival closed labs like OpenAI, Google, Gemini, and Anthropic
+   • HOW: Positive impact on price expected
+   
+   CATALYST RISK:
+   Market reaction to the funding to Reflection AI
+   
+   RECOMMENDATION:
+   Trade - The funding to Reflection AI is expected to boost the stock price.
+
+#5. UNH Bear Call $365/$370
+   DTE: 7 | ROI: 27.6% | PoP: 84.1% | HEAT: 4
+   
+   5W1H ANALYSIS:
+   • WHO: UnitedHealth Group (UNH)
+   • WHAT: Recent fall in stock price
+   • WHEN: Most recent trading session
+   • WHERE: Global market
+   • WHY: Market fluctuations
+   • HOW: Negative impact on price
+   
+   CATALYST RISK:
+   Market reaction to the recent fall in stock price
+   
+   RECOMMENDATION:
+   Wait - The recent fall in stock price may continue to impact the stock negatively.
+
+#6. ORCL Bear Call $340/$350
+   DTE: 35 | ROI: 29.0% | PoP: 78.4% | HEAT: 4
+   
+   5W1H ANALYSIS:
+   • WHO: Oracle (ORCL)
+   • WHAT: Fall in stock price due to regional bank fears
+   • WHEN: On the latest trading day
+   • WHERE: Global market
+   • WHY: Regional bank fears
+   • HOW: Negative impact on price
+   
+   CATALYST RISK:
+   Market reaction to the regional bank fears
+   
+   RECOMMENDATION:
+   Wait - The regional bank fears may continue to impact the stock negatively.
+
+#7. LEN Bear Call $126/$130
+   DTE: 7 | ROI: 31.1% | PoP: 70.7% | HEAT: 4
+   
+   5W1H ANALYSIS:
+   • WHO: Lennar Corporation (LEN)
+   • WHAT: Predicted slowdown in U.S. homebuilding due to affordability issues
+   • WHEN: Set for 2025
+   • WHERE: U.S. market
+   • WHY: Affordability issues
+   • HOW: Negative impact on price expected
+   
+   CATALYST RISK:
+   Market reaction to the predicted slowdown in U.S. homebuilding
+   
+   RECOMMENDATION:
+   Wait - The predicted slowdown in U.S. homebuilding may impact the stock negatively.
+
+#8. MMM Bear Call $160/$165
+   DTE: 35 | ROI: 30.5% | PoP: 71.6% | HEAT: 3
+   
+   5W1H ANALYSIS:
+   • WHO: 3M (MMM)
+   • WHAT: Named on Fast Company's fifth annual Next Big Things in Tech list
+   • WHEN: Recently
+   • WHERE: Global market
+   • WHY: Advancing the core technologies that power the next generation of intelligent systems
+   • HOW: Positive impact on price expected
+   
+   CATALYST RISK:
+   Market reaction to the recognition by Fast Company
+   
+   RECOMMENDATION:
+   Trade - The recognition by Fast Company is expected to boost the stock price.
+
+#9. DELL Bear Call $158/$160
+   DTE: 7 | ROI: 25.0% | PoP: 83.8% | HEAT: 4
+   
+   5W1H ANALYSIS:
+   • WHO: Dell Technologies (DELL)
+   • WHAT: Raised long-term revenue and earnings guidance
+   • WHEN: Earlier this month
+   • WHERE: Global market
+   • WHY: Strong demand for AI infrastructure
+   • HOW: Positive impact on price expected
+   
+   CATALYST RISK:
+   Market reaction to the raised long-term revenue and earnings guidance
+   
+   RECOMMENDATION:
+   Trade - The raised long-term revenue and earnings guidance is expected to boost the stock price.
+
+✅ Saved to data/top9_analysis.json
+
+================================================================================
+💎 CREDIT SPREAD FINDER - MASTER PIPELINE
+Started: 2025-10-17 02:59:55
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 00A: Get S&P 500 tickers
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (1.1s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 00B: Filter by price & spread
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (13.4s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 00C: Filter by options chains
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (39.5s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 00D: Filter by IV range
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (35.9s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 00E: Score & select top 22
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (0.1s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 00F: Fetch news headlines
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (7.3s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 01: Get real-time prices
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (1.1s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 02: Get options chains
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (36.4s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 03: Check liquidity
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (0.2s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 04: Collect Greeks
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (194.2s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 05: Calculate spreads
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (1.5s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 06: Rank by score
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (0.1s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 07: Build report table
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (0.1s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 08: GPT 5W1H analysis
+────────────────────────────────────────────────────────────────────────────────
+✅ Complete (52.9s)
+
+────────────────────────────────────────────────────────────────────────────────
+⚡ STEP 09: Format final trades
+────────────────────────────────────────────────────────────────────────────────============================================================
+STEP 9: Format Top 9 with News
+============================================================
+
+============================================================================================================================================
+TOP 9 CREDIT SPREADS - WITH NEWS CATALYSTS
+Generated: 2025-10-17 03:06
+============================================================================================================================================
+
+#    Ticker   Type         Strikes      DTE   ROI      PoP      Heat  Catalyst Summary                                  
+--------------------------------------------------------------------------------------------------------------------------------------------
+1    NVDA     Bear Call    $188/$190    7     42.0%    83.1%    6     Nvidia's update on its data center business aft...
+2    AMD      Bear Call    $245/$248    7     31.6%    80.0%    5     Market reaction to the strategic partnership wi...
+3    AVGO     Bear Call    $380/$390    28    31.6%    76.7%    5     Market reaction to the reaffirmed outperform ra...
+4    GOOGL    Bear Call    $265/$270    14    31.6%    76.0%    5     Market reaction to the funding to Reflection AI   
+5    UNH      Bear Call    $365/$370    7     27.6%    84.1%    4     Market reaction to the recent fall in stock price 
+6    ORCL     Bear Call    $340/$350    35    29.0%    78.4%    4     Market reaction to the regional bank fears        
+7    LEN      Bear Call    $126/$130    7     31.1%    70.7%    4     Market reaction to the predicted slowdown in U....
+8    MMM      Bear Call    $160/$165    35    30.5%    71.6%    3     Market reaction to the recognition by Fast Company
+9    DELL     Bear Call    $158/$160    7     25.0%    83.8%    4     Market reaction to the raised long-term revenue...
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+SUMMARY: 9 analyzed | 6 Trade Now | 3 Wait
+
+DETAILED RECOMMENDATIONS:
+#1 NVDA: Trade - The upcoming business update is expected to boost the stock price.
+#2 AMD: Trade - The strategic partnership with OpenAI is expected to boost the stock price.
+#3 AVGO: Trade - The reaffirmed outperform rating is expected to boost the stock price.
+#4 GOOGL: Trade - The funding to Reflection AI is expected to boost the stock price.
+#5 UNH: Wait - The recent fall in stock price may continue to impact the stock negatively.
+#6 ORCL: Wait - The regional bank fears may continue to impact the stock negatively.
+#7 LEN: Wait - The predicted slowdown in U.S. homebuilding may impact the stock negatively.
+#8 MMM: Trade - The recognition by Fast Company is expected to boost the stock price.
+#9 DELL: Trade - The raised long-term revenue and earnings guidance is expected to boost the stock price.
+
+Saved to data/top9_trades_20251017_0306.csv
+
+Step 9 complete
+
+✅ Complete (0.0s)
+
+================================================================================
+📊 DATA FLOW SUMMARY
+================================================================================
+
+🎯 S&P 500: 3 tickers
+   ↓ Price Filter: 162 passed (5400.0%)
+   ↓ Options Filter: 162 passed (100.0%)
+   ↓ IV Filter: 155 passed (95.7%)
+   ↓ Top Scored: 22 selected
+
+📈 Spreads Built: 11278
+   ↓ Ranked: 22
+⚠️ Could not load summary: 'top_22'
+
+================================================================================
+✅ PIPELINE COMPLETE (391.4s total)
+================================================================================
+
+💰 Run: python3 pipeline/09_format_trades.py
+📊 To see your 9 trades

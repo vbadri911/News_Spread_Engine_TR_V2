@@ -38,16 +38,16 @@ def main():
         ("00d", "pipeline/00d_filter_iv.py", "Filter IV"),
         ("00e", "pipeline/00e_select_22.py", "Select 22"),
         ("00f", "pipeline/00f_get_news.py", "Get News"),
+        ("00g", "pipeline/00g_gpt_sentiment_filter.py", "GPT Sentiment"),
         ("01", "pipeline/01_get_prices.py", "Get Prices"),
         ("02", "pipeline/02_get_chains.py", "Get Chains"),
         ("03", "pipeline/03_check_liquidity.py", "Check Liquidity"),
         ("04", "pipeline/04_get_greeks.py", "Get Greeks"),
-        ("05", "pipeline/05_build_spreads.py", "Build Spreads"),
-        ("06", "pipeline/06_calculate_pop.py", "Calculate PoP"),
-        ("07", "pipeline/07_rank_spreads.py", "Rank Spreads"),
-        ("08", "pipeline/08_build_report.py", "Build Report"),
-        ("09", "pipeline/09_gpt_analysis.py", "GPT Analysis"),
-        ("10", "pipeline/10_format_trades.py", "Format Trades"),
+        ("05", "pipeline/05_calculate_spreads.py", "Calculate Spreads"),
+        ("06", "pipeline/06_rank_spreads.py", "Rank Spreads"),
+        ("07", "pipeline/07_build_report.py", "Build Report"),
+        ("08", "pipeline/08_gpt_analysis.py", "GPT Analysis"),
+        ("09", "pipeline/09_format_trades.py", "Format Trades"),
     ]
     
     completed = 0

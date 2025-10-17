@@ -1,3 +1,4 @@
+
 """
 Calculate Credit Spreads using Black-Scholes PoP
 Professional-grade probability calculations
@@ -6,10 +7,57 @@ import json
 import sys
 import os
 import math
-from datetime import datetime
+import time
+from datetime import datetime, timedelta
 from scipy.stats import norm
+import requests
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+def get_risk_free_rate():
+    """Fetch 3-mo T-bill from FRED, cache daily in data/rate.json"""
+    cache_file = "data/rate.json"
+    today = datetime.now().date().isoformat()
+    
+    # Check cache
+    try:
+        if os.path.exists(cache_file):
+            with open(cache_file, 'r') as f:
+                cache = json.load(f)
+            if cache.get('date') == today and 'rate' in cache:
+                #print(f"📈 Using cached risk-free rate: {cache['rate']*100:.2f}%")
+                return cache['rate']
+    except:
+        print("⚠️ Cache read failed, fetching new rate")
+
+    # Fetch from FRED
+    url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO"
+    for attempt in range(3):  # Retry logic
+        try:
+            resp = requests.get(url, timeout=5)
+            if resp.status_code == 200:
+                lines = resp.text.splitlines()
+                for line in reversed(lines):
+                    if line.strip() and not line.startswith('DATE'):
+                        date, value = line.split(',')
+                        if value != '.':
+                            rate = float(value) / 100
+                            # Cache it
+                            with open(cache_file, 'w') as f:
+                                json.dump({'date': today, 'rate': rate}, f)
+                            print(f"📈 Fetched risk-free rate: {rate*100:.2f}%")
+                            return rate
+            print(f"⚠️ Rate fetch attempt {attempt+1} failed: {resp.status_code}")
+            time.sleep(2 ** attempt)
+        except Exception as e:
+            print(f"⚠️ Rate fetch error: {e}, attempt {attempt+1}")
+            time.sleep(2 ** attempt)
+    
+    # Fallback
+    print("❌ Rate fetch failed, using fallback 0.042")
+    with open(cache_file, 'w') as f:
+        json.dump({'date': today, 'rate': 0.042}, f)
+    return 0.042
 
 def black_scholes_pop(stock_price, strike, dte, iv, is_call):
     """Calculate PoP using Black-Scholes"""
@@ -17,8 +65,8 @@ def black_scholes_pop(stock_price, strike, dte, iv, is_call):
         return 0
     
     T = dte / 365.0
-    r = 0.05
-    
+    r = get_risk_free_rate()  # Dynamic with cache
+
     d1 = (math.log(stock_price / strike) + (r + 0.5 * iv**2) * T) / (iv * math.sqrt(T))
     d2 = d1 - iv * math.sqrt(T)
     
@@ -75,12 +123,8 @@ def calculate_spreads():
                     if short_delta < 0.15 or short_delta > 0.35:
                         continue
                     
-                    short_bid = short_strike.get("put_bid", 0)
-                    long_ask = long_strike.get("put_ask", 0)
-                    
-                    if short_bid <= 0 or long_ask <= 0:
-                        continue
-                    
+                    short_bid = short_strike['put_bid']
+                    long_ask = long_strike['put_ask']
                     net_credit = short_bid - long_ask
                     width = short_strike["strike"] - long_strike["strike"]
                     
@@ -118,7 +162,7 @@ def calculate_spreads():
             
             # Bear Call Spreads
             for i in range(len(strikes)):
-                for j in range(i + 1, len(strikes)):
+                for j in range(i+1, len(strikes)):
                     short_strike = strikes[i]
                     long_strike = strikes[j]
                     
@@ -131,12 +175,8 @@ def calculate_spreads():
                     if short_delta < 0.15 or short_delta > 0.35:
                         continue
                     
-                    short_bid = short_strike.get("call_bid", 0)
-                    long_ask = long_strike.get("call_ask", 0)
-                    
-                    if short_bid <= 0 or long_ask <= 0:
-                        continue
-                    
+                    short_bid = short_strike['call_bid']
+                    long_ask = long_strike['call_ask']
                     net_credit = short_bid - long_ask
                     width = long_strike["strike"] - short_strike["strike"]
                     
